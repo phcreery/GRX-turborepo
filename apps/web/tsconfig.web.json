@@ -1,0 +1,18 @@
+{
+  // "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+  "extends": "./tsconfig.json",
+  "include": ["src/env.d.ts", "**/*", "**/*.tsx"],
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+
+    "outDir": "dist/types",
+    "composite": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@lib/*": ["lib/*"]
+    },
+    "types": ["vite-plugin-glsl/ext", "vite-plugin-arraybuffer/types"]
+  }
+}
