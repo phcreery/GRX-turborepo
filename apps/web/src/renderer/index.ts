@@ -1,14 +1,15 @@
 import * as Comlink from "comlink"
-import EngineWorker from "./engine/engine?worker"
-import type { QuerySelection, RenderEngineBackend, Stats } from "./engine/engine"
-import { AddLayerProps } from "./engine/plugins"
-import { PointerMode } from "./engine/types"
+import EngineWorker from "@repo/grx-engine/engine?worker"
+import type { QuerySelection, RenderEngineBackend, Stats } from "@repo/grx-engine/engine"
+import { AddLayerProps } from "@repo/grx-engine/plugins"
+import { PointerMode } from "@repo/grx-engine/types"
 
-import type { GridSettings, RenderSettings } from "./engine/settings"
-import { gridSettings, settings } from "./engine/settings"
-import cozetteFont from "./engine/step/layer/shape/text/cozette/CozetteVector.ttf?url"
-import { fontInfo as cozetteFontInfo } from "./engine/step/layer/shape/text/cozette/font"
-import { UID } from "./engine/utils"
+import type { GridSettings, RenderSettings } from "@repo/grx-engine/settings"
+import { gridSettings, settings } from "@repo/grx-engine/settings"
+import cozetteFont from "@repo/grx-engine/step/layer/shape/text/cozette/CozetteVector.ttf?url"
+import { fontInfo as cozetteFontInfo } from "@repo/grx-engine/step/layer/shape/text/cozette/font"
+import { UID } from "@repo/grx-engine/utils"
+
 
 const Worker = new EngineWorker()
 export const ComWorker = Comlink.wrap<typeof RenderEngineBackend>(Worker)

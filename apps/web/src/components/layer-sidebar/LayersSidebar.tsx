@@ -3,11 +3,11 @@ import { Card, Group, Text, Button, FileButton, Stack, ScrollArea, Modal, Select
 import { Dropzone, FileWithPath as FileWithFormat, FileWithPath } from "@mantine/dropzone"
 import { IconFileX, IconFileVector, IconContrast, IconContrastOff, IconClearAll } from "@tabler/icons-react"
 import LayerListItem from "./LayerListItem"
-import type { LayerInfo } from "@src/renderer/engine/engine"
+import type { LayerInfo } from "@repo/grx-engine/engine"
 import * as Comlink from "comlink"
 
-import { pluginList, plugins } from "@src/renderer/engine/plugins"
-import { EngineEvents } from "@src/renderer/engine/engine"
+import { pluginList, plugins } from "@repo/grx-engine/plugins"
+import { EngineEvents } from "@repo/grx-engine/engine"
 import { useContextMenu } from "mantine-contextmenu"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
 

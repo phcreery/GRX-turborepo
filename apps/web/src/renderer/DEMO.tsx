@@ -1,12 +1,12 @@
 import React, { useMemo } from "react"
 import "../App.css"
-import * as Symbols from "./engine/step/layer/shape/symbol/symbol"
-import * as Shapes from "./engine/step/layer/shape/shape"
+import * as Symbols from "@repo/grx-engine/step/layer/shape/symbol/symbol"
+import * as Shapes from "@repo/grx-engine/step/layer/shape/shape"
 import { RenderEngine } from "."
 import { Button, Switch, Box, SegmentedControl } from "@mantine/core"
 import { PointerEvent, PointerEvents } from "."
-import { SNAP_MODES, SNAP_MODES_MAP } from "./engine/types"
-import { POINTER_MODES, POINTER_MODES_MAP } from "./engine/types"
+import { SNAP_MODES, SNAP_MODES_MAP } from "@repo/grx-engine/types"
+import { POINTER_MODES, POINTER_MODES_MAP } from "@repo/grx-engine/types"
 
 // import gdsiiFile from '@lib/gdsii/testdata/GdsIITests_test.gds?url'
 // import gdsiiFile from "@lib/gdsii/testdata/inv.gds2?arraybuffer"
@@ -25,7 +25,7 @@ import cmp from "@lib/gerber/testdata/boards/bus-pirate/BusPirate-v3.6a-SSOP.cmp
 // import gtl_in from '@lib/gerber/testdata/boards/mini_linux_board_inch/Gerber_TopLayer.GTL?raw'
 // import gtl_mm from "@lib/gerber/testdata/boards/mini_linux_board_mm/Gerber_TopLayer.GTL?arraybuffer"
 
-import { LayerRendererProps } from "./engine/step/layer/layer"
+import { LayerRendererProps } from "@repo/grx-engine/step/layer/layer"
 
 const N_PADS = 0
 const N_LINES = 0

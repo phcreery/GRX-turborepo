@@ -2,10 +2,10 @@ import React, { useEffect } from "react"
 import { EditorConfigProvider } from "../../contexts/EditorContext"
 import chroma from "chroma-js"
 import { Text, Switch, Divider, Group, Flex, ColorPicker, SegmentedControl, NumberInput, Button, Space } from "@mantine/core"
-import { getUnitsConversion } from "@src/renderer/engine/utils"
+import { getUnitsConversion } from "@repo/grx-engine/utils"
 import { vec4 } from "gl-matrix"
 import { useLocalStorage } from "@mantine/hooks"
-import { gridSettings } from "@src/renderer/engine/settings"
+import { gridSettings } from "@repo/grx-engine/settings"
 
 interface GridSettingsProps {}
 const defaultGridSettings = JSON.parse(JSON.stringify(gridSettings))

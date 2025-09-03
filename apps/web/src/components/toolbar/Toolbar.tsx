@@ -30,7 +30,7 @@ import { useContextMenu } from "mantine-contextmenu"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
 import { actions } from "@src/contexts/Spotlight"
 import { menuItems } from "@src/contexts/EditorContext"
-import { PointerMode } from "@src/renderer/engine/types"
+import { PointerMode } from "@repo/grx-engine/types"
 import SnapSettings from "./SnapSettings"
 
 interface ToolbarProps {}

@@ -3,7 +3,7 @@ import { PointerEvent } from "@src/renderer"
 import { PointerEvents } from "@src/renderer"
 import { Card, Group, Text, Tooltip } from "@mantine/core"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
-import { getUnitsConversion } from "@src/renderer/engine/utils"
+import { getUnitsConversion } from "@repo/grx-engine/utils"
 
 interface MousePositionProps {}
 

@@ -15,13 +15,13 @@ import {
   IconArrowUpBar,
   IconNorthStar,
 } from "@tabler/icons-react"
-import { LayerInfo, QuerySelection } from "@src/renderer/engine/engine"
+import { LayerInfo, QuerySelection } from "@repo/grx-engine/engine"
 import classes from "./FeatureSidebar.module.css"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
-import { getUnitsConversion } from "@src/renderer/engine/utils"
+import { getUnitsConversion } from "@repo/grx-engine/utils"
 import chroma from "chroma-js"
-import { STANDARD_SYMBOLS, StandardSymbol } from "@src/renderer/engine/step/layer/shape/symbol/symbol"
-import { AttributeCollection, FeatureTypeIdentifier, Units } from "@src/renderer/engine/types"
+import { STANDARD_SYMBOLS, StandardSymbol } from "@repo/grx-engine/step/layer/shape/symbol/symbol"
+import { AttributeCollection, FeatureTypeIdentifier, Units } from "@repo/grx-engine/types"
 import { menuItems } from "@src/contexts/EditorContext"
 
 interface ToolbarProps {}

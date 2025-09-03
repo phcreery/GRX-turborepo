@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": [
+      "vite-plugin-glsl/ext",
+      "vite-plugin-arraybuffer/types"
+    ]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
+}
