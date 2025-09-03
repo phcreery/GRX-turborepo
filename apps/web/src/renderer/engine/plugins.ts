@@ -2,8 +2,8 @@
 // import gerberPluginWorker from "@lib/gerber?worker"
 // import dxfPluginWorker from "@lib/dxf?worker"
 // import ncPluginWorker from "@lib/nc?worker"
-import { LayerProps } from "./layer"
-import { ShapeProps } from "./shape-renderer"
+import { LayerProps } from "./step/layer/layer"
+import { ShapeProps } from "./step/layer/shape-renderer"
 import * as Comlink from "comlink"
 
 export interface AddLayerProps extends ShapeProps, LayerProps {}
@@ -22,19 +22,19 @@ export interface PluginsDefinition {
   }
 }
 export const plugins: PluginsDefinition = {
-  // rs274x: {
+  // 'RS-274X': {
   //   plugin: gerberPluginWorker,
   //   matchFile: (ext) => ["gbr", "geb", "gerber"].includes(ext),
   // },
-  // gdsii: {
+  // 'GDSII': {
   //   plugin: gdsiiPluginWorker,
   //   matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
   // },
-  // dxf: {
+  // 'DXF': {
   //   plugin: dxfPluginWorker,
   //   matchFile: (ext) => ["dxf"].includes(ext),
   // },
-  // nc: {
+  // 'NC': {
   //   plugin: ncPluginWorker,
   //   matchFile: (ext) => ["nc", "drl", "dr", "rt", "xnc"].includes(ext),
   // },

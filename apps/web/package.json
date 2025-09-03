@@ -40,6 +40,7 @@
     "@mantine/spotlight": "^7.13.0",
     "@react-hook/resize-observer": "^2.0.2",
     "@react-spring/web": "^9.7.4",
+    "@repo/grx-plugin-gdsii": "workspace:*",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@tabler/icons-react": "^3.19.0",
@@ -62,9 +63,9 @@
     "react-color": "^2.19.3",
     "regl": "^2.1.0",
     "regl-stats-widget": "^0.0.1",
+    "typescript-event-target": "^1.1.1",
     "web-vitals": "^4.2.3",
-    "webgl-utils": "^1.0.1",
-    "@repo/grx-plugin-gdsii": "workspace:*"
+    "webgl-utils": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",

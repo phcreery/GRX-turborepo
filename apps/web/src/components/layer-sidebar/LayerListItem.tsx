@@ -19,7 +19,7 @@ import {
   IconGripVertical,
 } from "@tabler/icons-react"
 import { ContextMenuContent, ShowContextMenuFunction, useContextMenu } from "mantine-contextmenu"
-import type { LayerInfo } from "@src/renderer/engine"
+import type { LayerInfo } from "@src/renderer/engine/engine"
 import { vec3 } from "gl-matrix"
 import LayerTransform from "./transform/LayerTransform"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
@@ -27,6 +27,7 @@ import { EditorConfigProvider } from "@src/contexts/EditorContext"
 import { CSS } from "@dnd-kit/utilities"
 import { useSortable } from "@dnd-kit/sortable"
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types"
+import * as Comlink from "comlink"
 
 interface LayerListItemProps {
   file: UploadFile
@@ -52,7 +53,7 @@ export default function LayerListItem(props: LayerListItemProps): JSX.Element | 
   async function changeColor(color: vec3): Promise<void> {
     const renderer = await renderEngine.backend
     if (!renderer) return
-    await renderer.setLayerProps(file.id, { color })
+    await renderer.setLayerProps("main", file.id, { color })
     setColor(color)
   }
 
@@ -185,10 +186,10 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
     const renderer = await renderEngine.backend
     if (!renderer) return
     if (visible) {
-      renderer.setLayerProps(file.id, { visible: false })
+      renderer.setLayerProps("main", file.id, { visible: false })
       setVisible(false)
     } else {
-      renderer.setLayerProps(file.id, { visible: true })
+      renderer.setLayerProps("main", file.id, { visible: true })
       setVisible(true)
     }
   }
@@ -260,6 +261,7 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
   ]
 
   function registerLayers(rendererLayers: LayerInfo[]): void {
+    // console.log("registerlayers", rendererLayers, file.id)
     const thisLayer = rendererLayers.find((l) => l.id === file.id)
     if (thisLayer) {
       setColor(thisLayer.color)
@@ -271,7 +273,7 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
 
   useEffect(() => {
     renderEngine.backend.then(async (renderer) => {
-      const layers = await renderer.getLayers()
+      const layers = await renderer.getLayers("main")
       registerLayers(layers)
       if (layers.find((l) => l.id === file.id)) {
         setLoading(false)
@@ -280,7 +282,7 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
 
       const reader = new FileReader()
       reader.onerror = (err): void => {
-        console.log(err, `${file.name} Error reading file.`)
+        console.error(err, `${file.name} Error reading file.`)
         notifications.show({
           title: "Error reading file",
           message: `${file.name} Error reading file.`,
@@ -289,7 +291,7 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
         })
       }
       reader.onabort = (err): void => {
-        console.log(err, `${file.name} File read aborted.`)
+        console.warn(err, `${file.name} File read aborted.`)
         notifications.show({
           title: "File read aborted",
           message: `${file.name} File read aborted.`,
@@ -299,19 +301,22 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
       }
       reader.onprogress = (e): void => {
         const percent = Math.round((e.loaded / e.total) * 100)
-        console.log(`${file.name} ${percent}% read`)
+        console.info(`${file.name} ${percent}% read`)
       }
       reader.onload = async (_e): Promise<void> => {
         if (reader.result !== null && reader.result !== undefined) {
           try {
-            await renderer.addFile({
+            console.time(`${file.name} file parse time`)
+            await renderer.addFile("main",
+              Comlink.transfer(reader.result as ArrayBuffer, [reader.result as ArrayBuffer]),
+              {
               format: file.format,
-              buffer: reader.result as ArrayBuffer,
               props: {
                 name: file.name,
-                // id: file.id
+                id: file.id,
               },
             })
+            console.timeEnd(`${file.name} file parse time`)
             // notifications.show({
             //   title: 'File read',
             //   message: `${file.name} file read.`,
@@ -327,7 +332,7 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
               autoClose: 5000,
             })
           }
-          registerLayers(await renderer.getLayers())
+          registerLayers(await renderer.getLayers("main"))
         } else {
           notifications.show({
             title: "File upload failed",
