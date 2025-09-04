@@ -5,6 +5,14 @@ import glslify from "rollup-plugin-glslify";
 import arraybuffer from "vite-plugin-arraybuffer";
 import path from "path";
 import { glob } from "glob";
+import dts from "unplugin-dts/vite";
+
+const inputFiles = glob.sync(
+  path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/")
+);
+
+console.log(path.resolve(__dirname, "src/**/*.ts"));
+console.log("inputFiles:", inputFiles);
 
 export default defineConfig({
   build: {
@@ -12,15 +20,17 @@ export default defineConfig({
     minify: false,
     lib: {
       entry: "./src/index.ts",
-      //   name: "@repo/grx-engine",
+      name: "@repo/grx-engine",
       //   fileName: "grx-engine",
       formats: ["es"],
     },
     rollupOptions: {
-      external: ['yeoman-generator'],
-      input: glob.sync(path.resolve(__dirname, "src/**/*.ts")),
+      // external: ['yeoman-generator'],
+      input: inputFiles,
       output: {
         preserveModules: true,
+        // preserveModules: false,
+        preserveModulesRoot: "src",
         //   entryFileNames: (entry) => {
         //     const { name, facadeModuleId } = entry;
         //     const fileName = `${name}.js`;
@@ -40,6 +50,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    dts(),
     react(),
     // comlink(),
     arraybuffer(),

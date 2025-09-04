@@ -5,12 +5,11 @@
   "scripts": {
     "build": "vite build"
   },
-  "files": [
-    "dist/**",
-    "dist"
-  ],
   "exports": {
-    "./*": "./src/*.ts",
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    },
     "./step/layer/shape/text/cozette/CozetteVector.ttf": "./src/step/layer/shape/text/cozette/CozetteVector.ttf"
   },
   "dependencies": {
@@ -28,5 +27,9 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "unplugin-dts": "^1.0.0-beta.0"
   }
 }
