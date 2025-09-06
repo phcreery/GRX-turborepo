@@ -6,36 +6,36 @@
 // import gdsiiFile from './testdata/GdsIITests_test.gds?url' // broken boundaries, paths with different ends
 // import gdsiiFile from './testdata/GdsIITests_circles.gds?url'
 
-// import { recordReader } from "./lexer"
-// import { parse } from "./parser"
-// import { convert } from "./converter"
+import { recordReader } from "./lexer"
+import { parse } from "./parser"
+import { convert } from "./converter"
 
-// import messages from "./messages"
+import messages from "./messages"
 
-// import * as Comlink from "comlink"
-// import { AddLayerProps } from "@src/renderer/plugins"
+import * as Comlink from "comlink"
+import { AddLayerProps } from "@repo/grx-engine/plugins"
 
-// export async function plugin(
-//   buffer: ArrayBuffer,
-//   props: Partial<AddLayerProps>,
-//   addLayer: (params: AddLayerProps) => void,
-//   addMessage: (title: string, message: string) => Promise<void>,
-// ): Promise<void> {
-//   messages.setSender(addMessage, "GDSII")
-//   messages.clear()
-//   const tokens = recordReader(buffer)
-//   const bnf = parse(tokens)
-//   const layerHierarchy = convert(bnf)
+export async function plugin(
+  buffer: ArrayBuffer,
+  props: Partial<AddLayerProps>,
+  addLayer: (params: AddLayerProps) => void,
+  addMessage: (title: string, message: string) => Promise<void>,
+): Promise<void> {
+  messages.setSender(addMessage, "GDSII")
+  messages.clear()
+  const tokens = recordReader(buffer)
+  const bnf = parse(tokens)
+  const layerHierarchy = convert(bnf)
 
-//   for (const [layer, shapes] of Object.entries(layerHierarchy)) {
-//     delete props.name
-//     addLayer({
-//       name: layer,
-//       units: 1 / (bnf.UNITS.metersPerDatabaseUnit * 1000),
-//       image: shapes.shapes,
-//       ...props,
-//     })
-//   }
-// }
+  for (const [layer, shapes] of Object.entries(layerHierarchy)) {
+    delete props.name
+    addLayer({
+      name: layer,
+      units: 1 / (bnf.UNITS.metersPerDatabaseUnit * 1000),
+      image: shapes.shapes,
+      ...props,
+    })
+  }
+}
 
-// Comlink.expose(plugin)
+Comlink.expose(plugin)
