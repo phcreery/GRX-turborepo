@@ -1,5 +1,4 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import { comlink } from "vite-plugin-comlink";
 import glslify from "rollup-plugin-glslify";
 import arraybuffer from "vite-plugin-arraybuffer";
@@ -11,7 +10,6 @@ const inputFiles = glob.sync(
   path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/")
 );
 
-console.log(path.resolve(__dirname, "src/**/*.ts"));
 console.log("inputFiles:", inputFiles);
 
 export default defineConfig({
@@ -51,7 +49,6 @@ export default defineConfig({
   },
   plugins: [
     dts(),
-    react(),
     // comlink(),
     arraybuffer(),
     glslify({

@@ -5,7 +5,7 @@ import { glFloatSize } from "../../constants"
 import { FeatureTypeIdentifier, Binary } from "../../types"
 import { MacroRenderer, StepAndRepeatRenderer } from "./shape-renderer"
 
-// import PadFrag from "./../../shaders/src/Pad.frag"
+import PadFrag from "./../../shaders/src/Pad.frag"
 import PadVert from "./../../shaders/src/Pad.vert"
 import LineFrag from "./../../shaders/src/Line.frag"
 import LineVert from "./../../shaders/src/Line.vert"
