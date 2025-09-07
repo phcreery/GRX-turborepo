@@ -99,10 +99,18 @@
         "vitest": "^2.1.1",
       },
     },
+    "packages/gdsii": {
+      "name": "@repo/gdsii",
+      "version": "0.0.0",
+      "peerDependencies": {
+        "typescript": "^5",
+      },
+    },
     "packages/grx-engine": {
       "name": "@repo/grx-engine",
       "version": "0.0.0",
       "dependencies": {
+        "@repo/grx-plugin-gdsii": "workspace:*",
         "chevrotain": "^11.0.3",
         "chokidar": "^4.0.3",
         "comlink": "^4.4.2",
@@ -389,6 +397,8 @@
     "@react-spring/types": ["@react-spring/types@9.7.5", "", {}, "sha512-HVj7LrZ4ReHWBimBvu2SKND3cDVUPWKLqRTmWe/fNY6o1owGOX0cAHbdPDTMelgBlVbrTKrre6lFkhqGZErK/g=="],
 
     "@react-spring/web": ["@react-spring/web@9.7.5", "", { "dependencies": { "@react-spring/animated": "~9.7.5", "@react-spring/core": "~9.7.5", "@react-spring/shared": "~9.7.5", "@react-spring/types": "~9.7.5" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0" } }, "sha512-lmvqGwpe+CSttsWNZVr+Dg62adtKhauGwLyGE/RRyZ8AAMLgb9x3NDMA5RMElXo+IMyTkPp7nxTB8ZQlmhb6JQ=="],
+
+    "@repo/gdsii": ["@repo/gdsii@workspace:packages/gdsii"],
 
     "@repo/grx-engine": ["@repo/grx-engine@workspace:packages/grx-engine"],
 

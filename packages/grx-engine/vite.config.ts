@@ -4,6 +4,7 @@ import glslify from "rollup-plugin-glslify";
 import path from "path";
 import { glob } from "glob";
 // import dts from "unplugin-dts/vite";
+import arraybuffer from "vite-plugin-arraybuffer"
 
 const inputFiles = glob.sync(
   path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/")
@@ -39,5 +40,17 @@ export default defineConfig({
       // @ts-ignore - glslify options are not typed
       transform: ["glslify-import"],
     }),
-  ]
+  ],
+  worker: {
+    format: "es",
+    plugins: () => [
+      comlink(),
+      arraybuffer(),
+      glslify({
+        compress: false,
+        // @ts-ignore - glslify options are not typed
+        transform: ["glslify-import"],
+      }),
+    ],
+  },
 });

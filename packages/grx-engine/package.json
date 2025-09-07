@@ -21,7 +21,8 @@
     "glob": "^11.0.3",
     "glslify": "^7.1.1",
     "regl": "^2.1.1",
-    "typescript-event-target": "^1.1.1"
+    "typescript-event-target": "^1.1.1",
+    "@repo/grx-plugin-gdsii": "workspace:*"
   },
   "peerDependencies": {
     "typescript": "^5"

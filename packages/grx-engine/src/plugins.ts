@@ -1,7 +1,7 @@
-// import gdsiiPluginWorker from "@lib/gdsii?worker"
-// import gerberPluginWorker from "@lib/gerber?worker"
-// import dxfPluginWorker from "@lib/dxf?worker"
-// import ncPluginWorker from "@lib/nc?worker"
+import gdsiiPluginWorker from "./plugins/gdsii?worker"
+// import gerberPluginWorker from "./plugins/gerber?worker"
+// import dxfPluginWorker from "./plugins/dxf?worker"
+// import ncPluginWorker from "./plugins/nc?worker"
 import { LayerProps } from "./step/layer/layer"
 import { ShapeProps } from "./step/layer/shape-renderer"
 import * as Comlink from "comlink"
@@ -26,10 +26,10 @@ export const plugins: PluginsDefinition = {
   //   plugin: gerberPluginWorker,
   //   matchFile: (ext) => ["gbr", "geb", "gerber"].includes(ext),
   // },
-  // 'GDSII': {
-  //   plugin: gdsiiPluginWorker,
-  //   matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
-  // },
+  'GDSII': {
+    plugin: gdsiiPluginWorker,
+    matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
+  },
   // 'DXF': {
   //   plugin: dxfPluginWorker,
   //   matchFile: (ext) => ["dxf"].includes(ext),

@@ -1,5 +1,5 @@
 {
-  "name": "@repo/grx-plugin-gdsii",
+  "name": "@repo/gdsii",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,8 +12,8 @@
   ],
   "exports": {
     "./*": {
-      "types": "./src/*",
-      "default": "./dist/*"
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
     }
   },
   "peerDependencies": {
