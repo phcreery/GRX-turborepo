@@ -1,15 +1,14 @@
-import * as Shapes from "@repo/grx-engine/step/layer/shape/shape"
+import type { Shape } from "@repo/grx-engine/step/layer/shape/shape"
 
 export type GDSIIHierarchy = {
   [cellName: string]: {
     layer: number
-    // datatype: number
-    shape: Shapes.Shape
+    shape: Shape
   }[]
 }
 
 export type LayerHierarchy = {
   [layer: number]: {
-    shapes: Shapes.Shape[]
+    shapes: Shape[]
   }
 }

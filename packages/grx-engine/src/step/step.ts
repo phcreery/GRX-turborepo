@@ -4,8 +4,8 @@ import LayerRenderer, { LayerRendererProps } from "./layer/layer"
 import { ReglRenderers, TLoadedReglRenderers } from "./layer/collections"
 import * as Shapes from "./layer/shape/shape"
 import * as Comlink from "comlink"
-import plugins from "../plugins"
-import type { Plugin, PluginsDefinition, AddLayerProps } from "../plugins"
+import { getPlugins } from "../plugins"
+import type { IPlugin, PluginsDefinition, AddLayerProps } from "../plugins"
 import { type Units, type BoundingBox, FeatureTypeIdentifier, SNAP_MODES_MAP, SnapMode, ColorBlend, ViewBox } from "../types"
 import Transform from "../transform"
 import { UID } from "../utils"
@@ -411,12 +411,12 @@ export class StepRenderer {
       // this.addMessage({ level: MessageLevel.ERROR, title: 'File Load Error', message: 'No format provided' })
       return
     }
+    const plugins = getPlugins()
     if (!Object.keys(plugins).includes(params.format)) {
       console.error("No parser found for format: " + params.format)
       this.sendMessage({ level: MessageLevel.ERROR, title: "File Load Error", message: "No parser found for format: " + params.format })
       return
     }
-
     const pluginWorker = plugins[params.format].plugin
     if (pluginWorker) {
       const tempUID = UID()
@@ -427,7 +427,7 @@ export class StepRenderer {
         this.sendMessage({ level: MessageLevel.WARN, title, message })
       }
       const instance = new pluginWorker()
-      const parser = Comlink.wrap<Plugin>(instance)
+      const parser = Comlink.wrap<IPlugin>(instance)
       try {
         await parser(Comlink.transfer(buffer, [buffer]), params.props, Comlink.proxy(addLayerCallback), Comlink.proxy(addMessageCallback))
       } catch (error) {

@@ -3,7 +3,8 @@ import { mat3, vec2, vec3 } from "gl-matrix"
 import { LayerRendererProps } from "./step/layer/layer"
 import { initializeFontRenderer, initializeRenderers } from "./step/layer/collections"
 import * as Comlink from "comlink"
-import type { PluginsDefinition, AddLayerProps } from "./plugins"
+import { addPlugin } from "./plugins"
+import type { PluginDefinition, AddLayerProps } from "./plugins"
 import { type Units } from "./types"
 import { Transform } from "./transform"
 import { ShapeDistance } from "./step/layer/shape-renderer"
@@ -109,7 +110,7 @@ export class RenderEngineBackend {
   // public loadingFrame: LoadingAnimation
   // public measurements: SimpleMeasurement
 
-  public parsers: PluginsDefinition = {}
+  // public parsers: PluginsDefinition = {}
 
   public eventTarget = new EventTarget()
 
@@ -197,6 +198,10 @@ export class RenderEngineBackend {
     newStep.eventTarget.addEventListener("RENDER", this.renderDispatch)
     this.views.set(id, newStep)
     this.render()
+  }
+
+  public addPlugin(name: string, plugin: PluginDefinition): void {
+    addPlugin(name, plugin)
   }
 
   // public addStep(name: string, viewBox: DOMRect): void {

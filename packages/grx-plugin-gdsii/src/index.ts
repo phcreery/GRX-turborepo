@@ -6,24 +6,21 @@
 // import gdsiiFile from './testdata/GdsIITests_test.gds?url' // broken boundaries, paths with different ends
 // import gdsiiFile from './testdata/GdsIITests_circles.gds?url'
 
-// import { recordReader } from "./lexer"
-// import { parse } from "./parser"
+import * as Comlink from "comlink"
+import type { IPlugin, AddLayerProps } from "@repo/grx-engine/plugins"
 
 import { recordReader } from "@repo/gdsii/lexer"
 import { parse } from "@repo/gdsii/parser"
-import { convert } from "./converter"
 
+import { convert } from "./converter"
 import messages from "./messages"
 
-import * as Comlink from "comlink"
-import { AddLayerProps } from "@repo/grx-engine/plugins"
-
-export async function plugin(
+export const plugin: IPlugin = async (
   buffer: ArrayBuffer,
   props: Partial<AddLayerProps>,
   addLayer: (params: AddLayerProps) => void,
   addMessage: (title: string, message: string) => Promise<void>,
-): Promise<void> {
+): Promise<void> => {
   messages.setSender(addMessage, "GDSII")
   messages.clear()
   const tokens = recordReader(buffer)

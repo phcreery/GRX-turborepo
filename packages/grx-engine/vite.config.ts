@@ -3,7 +3,7 @@ import { comlink } from "vite-plugin-comlink";
 import glslify from "rollup-plugin-glslify";
 import path from "path";
 import { glob } from "glob";
-// import dts from "unplugin-dts/vite";
+import dts from "unplugin-dts/vite";
 import arraybuffer from "vite-plugin-arraybuffer"
 
 const inputFiles = glob.sync(
@@ -33,8 +33,8 @@ export default defineConfig({
     },
   },
   plugins: [
-    // dts(),
-    comlink(),
+    dts(),
+    // comlink(),
     glslify({
       compress: false,
       // @ts-ignore - glslify options are not typed
@@ -44,7 +44,7 @@ export default defineConfig({
   worker: {
     format: "es",
     plugins: () => [
-      comlink(),
+      // comlink(),
       arraybuffer(),
       glslify({
         compress: false,

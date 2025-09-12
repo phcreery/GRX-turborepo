@@ -6,7 +6,7 @@ import LayerListItem from "./LayerListItem"
 import type { LayerInfo } from "@repo/grx-engine/engine"
 import * as Comlink from "comlink"
 
-import { pluginList, plugins } from "@repo/grx-engine/plugins"
+import { plugins } from "@repo/grx-engine/plugins"
 import { EngineEvents } from "@repo/grx-engine/engine"
 import { useContextMenu } from "mantine-contextmenu"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
@@ -57,7 +57,7 @@ export default function LayerSidebar(_props: SidebarProps): JSX.Element | null {
   }
 
   function identifyFileType(file: FileWithPath): string {
-    const defaultFormat = pluginList[0]
+    const defaultFormat = Object.keys(plugins)[0] || ""
 
     const extension = file.name.split(".").pop()?.toLowerCase()
     if (!extension) return defaultFormat
@@ -197,7 +197,7 @@ export default function LayerSidebar(_props: SidebarProps): JSX.Element | null {
               key={file.id}
               label={file.name}
               placeholder="Pick value"
-              data={pluginList}
+              data={Object.keys(plugins)}
               defaultValue={file.format}
               comboboxProps={{ shadow: "md" }}
               onChange={(value): void => {
