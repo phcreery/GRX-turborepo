@@ -21,12 +21,12 @@ export interface PluginsDefinition {
     matchFile: (ext: string) => boolean
   }
 }
-export const plugins: PluginsDefinition = {
+export let plugins: PluginsDefinition = {
   // 'RS-274X': {
   //   plugin: gerberPluginWorker,
   //   matchFile: (ext) => ["gbr", "geb", "gerber"].includes(ext),
   // },
-  'GDSII': {
+  GDSII: {
     plugin: gdsiiPluginWorker,
     matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
   },
