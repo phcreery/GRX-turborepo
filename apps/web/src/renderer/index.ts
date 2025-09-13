@@ -10,9 +10,8 @@ import cozetteFont from "@repo/grx-engine/step/layer/shape/text/cozette/CozetteV
 import { fontInfo as cozetteFontInfo } from "@repo/grx-engine/step/layer/shape/text/cozette/font"
 import { UID } from "@repo/grx-engine/utils"
 
-
 const Worker = new EngineWorker()
-export const ComWorker = Comlink.wrap<typeof RenderEngineBackend>(Worker)
+export const RenderEngineBackendComWorker = Comlink.wrap<typeof RenderEngineBackend>(Worker)
 
 export interface RenderEngineFrontendConfig {
   container?: HTMLElement
@@ -45,32 +44,26 @@ export const PointerEvents = {
 export type PointerEvent = CustomEvent<PointerCoordinates>
 
 export class RenderEngine {
-  public settings: RenderSettings = new Proxy(
-    settings,
-    {
-      set: (target, name, value): boolean => {
-        this.backend.then((engine) => {
-          // engine.settings[name] = value
-          engine.setSettings({ [name]: value })
-        })
-        target[name] = value
-        return true
-      },
+  public settings: RenderSettings = new Proxy(settings, {
+    set: (target, name, value): boolean => {
+      this.backend.then((engine) => {
+        // engine.settings[name] = value
+        engine.setSettings({ [name]: value })
+      })
+      target[name] = value
+      return true
     },
-  )
-  public grid: GridSettings = new Proxy(
-    gridSettings,
-    {
-      set: (target, name, value): boolean => {
-        this.backend.then((engine) => {
-          // engine.grid[name] = value
-          engine.setGrid({ [name]: value })
-        })
-        target[name] = value
-        return true
-      },
+  })
+  public grid: GridSettings = new Proxy(gridSettings, {
+    set: (target, name, value): boolean => {
+      this.backend.then((engine) => {
+        // engine.grid[name] = value
+        engine.setGrid({ [name]: value })
+      })
+      target[name] = value
+      return true
     },
-  )
+  })
   public pointerSettings: PointerSettings = new Proxy(
     {
       mode: PointerMode.MOVE,
@@ -142,7 +135,7 @@ export class RenderEngine {
     const offscreenCanvasGL = this.canvasGL.transferControlToOffscreen()
     // const offscreenCanvas2D = this.canvas2D.transferControlToOffscreen()
 
-    this.backend = new ComWorker(Comlink.transfer(offscreenCanvasGL, [offscreenCanvasGL]), {
+    this.backend = new RenderEngineBackendComWorker(Comlink.transfer(offscreenCanvasGL, [offscreenCanvasGL]), {
       attributes,
       container: this.CONTAINER.getBoundingClientRect(),
       // dpr: this.canvasSettings.dpr,
@@ -542,7 +535,7 @@ export class RenderEngine {
   public async destroy(): Promise<void> {
     const backend = await this.backend
     backend.destroy()
-    ComWorker[Comlink.releaseProxy]()
+    RenderEngineBackendComWorker[Comlink.releaseProxy]()
     Worker.terminate()
 
     this.CONTAINER.childNodes.forEach((node) => {

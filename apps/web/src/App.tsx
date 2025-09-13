@@ -19,9 +19,6 @@ import { useLocalStorage } from "@mantine/hooks"
 import { Units } from "@repo/grx-engine/types"
 import { IconPhotoDown } from "@tabler/icons-react"
 
-import gdsiiPluginWorker from "@repo/grx-plugin-gdsii?worker"
-
-
 export default function App(): JSX.Element | null {
   const { transparency } = useContext(ThemeConfigProvider)
   const theme = useMantineTheme()

@@ -2,7 +2,7 @@ import { resolve } from "path"
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import { comlink } from "vite-plugin-comlink"
-import glslify from "rollup-plugin-glslify"
+// import glslify from "rollup-plugin-glslify"
 import arraybuffer from "vite-plugin-arraybuffer"
 
 export default defineConfig({
@@ -23,7 +23,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    // comlink(),
+    comlink(),
     // arraybuffer(),
     // glslify({
     //   compress: false,
@@ -36,11 +36,11 @@ export default defineConfig({
     plugins: () => [
       comlink(),
       arraybuffer(),
-      glslify({
-        compress: false,
-        // @ts-ignore - glslify options are not typed
-        transform: ["glslify-import"],
-      }),
+      // glslify({
+      //   compress: false,
+      //   // @ts-ignore - glslify options are not typed
+      //   transform: ["glslify-import"],
+      // }),
     ],
   },
 })

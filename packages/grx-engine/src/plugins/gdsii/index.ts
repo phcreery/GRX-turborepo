@@ -7,7 +7,7 @@
 // import gdsiiFile from './testdata/GdsIITests_circles.gds?url'
 
 import * as Comlink from "comlink"
-import type { IPlugin, AddLayerProps } from "@repo/grx-engine/plugins"
+import type { IPlugin } from "../../plugins"
 
 import { recordReader } from "@repo/gdsii/lexer"
 import { parse } from "@repo/gdsii/parser"
@@ -15,12 +15,7 @@ import { parse } from "@repo/gdsii/parser"
 import { convert } from "./converter"
 import messages from "./messages"
 
-export const plugin: IPlugin = async (
-  buffer: ArrayBuffer,
-  props: Partial<AddLayerProps>,
-  addLayer: (params: AddLayerProps) => void,
-  addMessage: (title: string, message: string) => Promise<void>,
-): Promise<void> => {
+export const plugin: IPlugin = async (buffer, props, addLayer, addMessage): Promise<void> => {
   messages.setSender(addMessage, "GDSII")
   messages.clear()
   const tokens = recordReader(buffer)

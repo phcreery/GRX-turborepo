@@ -1,18 +1,17 @@
-import { defineConfig } from "vite";
-import { comlink } from "vite-plugin-comlink";
-import glslify from "rollup-plugin-glslify";
-import path from "path";
-import { glob } from "glob";
-import dts from "unplugin-dts/vite";
+import { defineConfig } from "vite"
+import { comlink } from "vite-plugin-comlink"
+import glslify from "rollup-plugin-glslify"
+import path from "path"
+import { glob } from "glob"
+import dts from "unplugin-dts/vite"
 import arraybuffer from "vite-plugin-arraybuffer"
 
-const inputFiles = glob.sync(
-  path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/")
-);
+const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/"))
 
-console.log("inputFiles:", inputFiles);
+console.log("inputFiles:", inputFiles)
 
 export default defineConfig({
+  base: "./",
   build: {
     emptyOutDir: true,
     minify: false,
@@ -27,14 +26,14 @@ export default defineConfig({
         preserveModules: true,
         preserveModulesRoot: "src",
         entryFileNames: ({ name: fileName }) => {
-          return `${fileName}.js`;
+          return `${fileName}.js`
         },
       },
     },
   },
   plugins: [
     dts(),
-    // comlink(),
+    comlink(),
     glslify({
       compress: false,
       // @ts-ignore - glslify options are not typed
@@ -44,7 +43,7 @@ export default defineConfig({
   worker: {
     format: "es",
     plugins: () => [
-      // comlink(),
+      comlink(),
       arraybuffer(),
       glslify({
         compress: false,
@@ -53,4 +52,4 @@ export default defineConfig({
       }),
     ],
   },
-});
+})

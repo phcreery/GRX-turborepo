@@ -142,7 +142,7 @@ export class RenderEngineBackend {
         "EXT_blend_minmax",
         // "WEBGL_color_buffer_float",
         "EXT_disjoint_timer_query",
-        "OES_standard_derivatives"
+        "OES_standard_derivatives",
       ],
       profile: true,
     })
@@ -201,6 +201,7 @@ export class RenderEngineBackend {
   }
 
   public addPlugin(name: string, plugin: PluginDefinition): void {
+    console.log("Adding plugin:", name)
     addPlugin(name, plugin)
   }
 
@@ -307,7 +308,7 @@ export class RenderEngineBackend {
   /**
    * @deprecated Use data api instead.
    */
-  public async addFile(view: string, buffer: ArrayBuffer, params: {format: string; props: Partial<Omit<AddLayerProps, "image">> }): Promise<void> {
+  public async addFile(view: string, buffer: ArrayBuffer, params: { format: string; props: Partial<Omit<AddLayerProps, "image">> }): Promise<void> {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
     return this.views.get(view)!.addFile(buffer, params)
   }

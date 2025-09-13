@@ -5,7 +5,7 @@ import { ReglRenderers, TLoadedReglRenderers } from "./layer/collections"
 import * as Shapes from "./layer/shape/shape"
 import * as Comlink from "comlink"
 import { getPlugins } from "../plugins"
-import type { IPlugin, PluginsDefinition, AddLayerProps } from "../plugins"
+import type { IPlugin, PluginMap, AddLayerProps } from "../plugins"
 import { type Units, type BoundingBox, FeatureTypeIdentifier, SNAP_MODES_MAP, SnapMode, ColorBlend, ViewBox } from "../types"
 import Transform from "../transform"
 import { UID } from "../utils"
@@ -171,7 +171,7 @@ export class StepRenderer {
   // public loadingFrame: LoadingAnimation
   public measurements: SimpleMeasurement
 
-  public parsers: PluginsDefinition = {}
+  public parsers: PluginMap = {}
 
   public eventTarget = new TypedEventTarget<EngineEventsMap>()
 

@@ -12,6 +12,6 @@
     "paths": {
       "@src/*": ["src/*"],
     },
-    "types": ["vite-plugin-glsl/ext", "vite-plugin-arraybuffer/types"]
+    "types": ["vite-plugin-arraybuffer/types"]
   }
 }

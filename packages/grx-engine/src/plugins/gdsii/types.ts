@@ -1,4 +1,4 @@
-import type { Shape } from "@repo/grx-engine/step/layer/shape/shape"
+import type { Shape } from "../../step/layer/shape/shape"
 
 export type GDSIIHierarchy = {
   [cellName: string]: {

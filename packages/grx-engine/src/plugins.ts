@@ -1,4 +1,4 @@
-// import gdsiiPluginWorker from "./plugins/gdsii?worker"
+import GdsiiPluginWorker from "./plugins/gdsii?worker"
 // import gerberPluginWorker from "./plugins/gerber?worker"
 // import dxfPluginWorker from "./plugins/dxf?worker"
 // import ncPluginWorker from "./plugins/nc?worker"
@@ -12,27 +12,27 @@ export type IPlugin = (
   buffer: ArrayBuffer,
   props: Partial<AddLayerProps>,
   addLayer: (params: AddLayerProps) => void,
-  addMessage?: (title: string, message: string) => Promise<void>,
+  addMessage: (title: string, message: string) => Promise<void>,
 ) => Promise<void>
 
 export type PluginDefinition = {
-    plugin: new () => Worker
-    matchFile: (ext: string) => boolean
+  plugin: new () => Worker
+  matchFile: (ext: string) => boolean
 }
 
-export interface PluginsDefinition {
+export interface PluginMap {
   [key: string]: PluginDefinition
 }
 
-const plugins: PluginsDefinition = {
+const plugins: PluginMap = {
   // 'RS-274X': {
   //   plugin: gerberPluginWorker,
   //   matchFile: (ext) => ["gbr", "geb", "gerber"].includes(ext),
   // },
-  // GDSII: {
-  //   plugin: gdsiiPluginWorker,
-  //   matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
-  // },
+  GDSII: {
+    plugin: GdsiiPluginWorker,
+    matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
+  },
   // 'DXF': {
   //   plugin: dxfPluginWorker,
   //   matchFile: (ext) => ["dxf"].includes(ext),
@@ -47,7 +47,7 @@ export function addPlugin(name: string, plugin: PluginDefinition): void {
   plugins[name] = plugin
 }
 
-export function getPlugins(): PluginsDefinition {
+export function getPlugins(): PluginMap {
   return plugins
 }
 
