@@ -3,6 +3,13 @@ import { UniverseContext } from "../../../../engine"
 import { vec2, vec3 } from "gl-matrix"
 import { WorldContext } from "../../../step"
 
+export interface FontInfo {
+  fontSize: vec2
+  fontSpacing: vec2
+  textureSize: vec2
+  characterLocation: Record<string, { x: number; y: number }>
+}
+
 interface TextUnit {
   text: string
   location: vec2

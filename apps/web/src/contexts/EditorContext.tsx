@@ -1,7 +1,7 @@
 import React from "react"
 import { ContextMenuItemOptions } from "mantine-contextmenu"
-import { Units } from "@src/renderer/engine/types"
-import { RenderEngine } from "@src/renderer"
+import { Units } from "@repo/grx-engine/types"
+import { RenderEngine } from "@repo/grx-renderer"
 
 export interface EditorContext {
   renderEngine: RenderEngine

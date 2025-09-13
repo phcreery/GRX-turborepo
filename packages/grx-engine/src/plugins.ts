@@ -16,7 +16,7 @@ export type IPlugin = (
 ) => Promise<void>
 
 export type PluginDefinition = {
-  plugin: new () => Worker
+  PluginWorker: new () => Worker
   matchFile: (ext: string) => boolean
 }
 
@@ -30,7 +30,7 @@ const plugins: PluginMap = {
   //   matchFile: (ext) => ["gbr", "geb", "gerber"].includes(ext),
   // },
   GDSII: {
-    plugin: GdsiiPluginWorker,
+    PluginWorker: GdsiiPluginWorker,
     matchFile: (ext) => ["gds", "gdsii", "gds2"].includes(ext),
   },
   // 'DXF': {

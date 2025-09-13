@@ -1,6 +1,6 @@
 import React from "react"
-import { PointerEvent } from "@src/renderer"
-import { PointerEvents } from "@src/renderer"
+import { PointerEvent } from "@repo/grx-renderer"
+import { PointerEvents } from "@repo/grx-renderer"
 import { Card, Group, Text, Tooltip } from "@mantine/core"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
 import { getUnitsConversion } from "@repo/grx-engine/utils"

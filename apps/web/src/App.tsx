@@ -1,6 +1,6 @@
 import "./App.css"
 import { useRef, useEffect, useState, useContext } from "react"
-import { RenderEngine } from "./renderer"
+import { RenderEngine } from "@repo/grx-renderer"
 import chroma from "chroma-js"
 import InfoModal from "./components/InfoModal"
 import Toolbar from "./components/toolbar/Toolbar"

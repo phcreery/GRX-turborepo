@@ -1,7 +1,7 @@
 import { defineConfig } from "vite"
 import { comlink } from "vite-plugin-comlink"
 import glslify from "rollup-plugin-glslify"
-import path from "path"
+import path, { resolve } from "path"
 import { glob } from "glob"
 import dts from "unplugin-dts/vite"
 import arraybuffer from "vite-plugin-arraybuffer"
@@ -29,6 +29,11 @@ export default defineConfig({
           return `${fileName}.js`
         },
       },
+    },
+  },
+  resolve: {
+    alias: {
+      "@src": resolve("src"),
     },
   },
   plugins: [

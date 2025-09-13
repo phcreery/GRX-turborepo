@@ -1,28 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  // "compilerOptions": {
-  //   "composite": true,
-
-  //   // "composite": false,
-  //   "target": "esnext",
-  //   "module": "esnext",
-  //   "sourceMap": false,
-  //   "strict": true,
-  //   "jsx": "preserve",
-  //   "esModuleInterop": true,
-  //   // "moduleResolution": "node",
-  //   "moduleResolution": "Bundler",
-  //   "resolveJsonModule": true,
-  //   "isolatedModules": true,
-  //   "forceConsistentCasingInFileNames": true,
-  //   "skipLibCheck": true,
-  //   "noUnusedLocals": true,
-  //   "noUnusedParameters": true,
-  //   "noImplicitAny": false,
-  //   "noImplicitReturns": true
-  // },
-  "extends": "@repo/typescript-config/vite.json",
-  // "files": [],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.node.json"
@@ -32,7 +10,3 @@
     }
   ]
 }
-// {
-//   "extends": "@repo/typescript-config/vite.json",
-//   "include": ["src"]
-// }

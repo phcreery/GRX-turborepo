@@ -6,19 +6,18 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
     "inlineSources": false,
     "isolatedModules": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "lib": ["esnext", "dom"],
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true
+    "noEmit": true,
+    "strictNullChecks": true
   },
   "exclude": ["node_modules"]
 }

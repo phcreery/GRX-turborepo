@@ -417,8 +417,8 @@ export class StepRenderer {
       this.sendMessage({ level: MessageLevel.ERROR, title: "File Load Error", message: "No parser found for format: " + params.format })
       return
     }
-    const pluginWorker = plugins[params.format].plugin
-    if (pluginWorker) {
+    const PluginWorker = plugins[params.format]!.PluginWorker
+    if (PluginWorker) {
       const tempUID = UID()
       this.layersQueue.push({ name: params.props.name || "", id: tempUID })
       const addLayerCallback = async (params: AddLayerProps): Promise<void> => await this.addLayer({ ...params, format: params.format })
@@ -426,8 +426,8 @@ export class StepRenderer {
         // await notifications.show({title, message})
         this.sendMessage({ level: MessageLevel.WARN, title, message })
       }
-      const instance = new pluginWorker()
-      const parser = Comlink.wrap<IPlugin>(instance)
+      const pluginWorkerInstance = new PluginWorker()
+      const parser = Comlink.wrap<IPlugin>(pluginWorkerInstance)
       try {
         await parser(Comlink.transfer(buffer, [buffer]), params.props, Comlink.proxy(addLayerCallback), Comlink.proxy(addMessageCallback))
       } catch (error) {
@@ -435,7 +435,7 @@ export class StepRenderer {
         throw error
       } finally {
         parser[Comlink.releaseProxy]()
-        instance.terminate()
+        pluginWorkerInstance.terminate()
         const index = this.layersQueue.findIndex((file) => file.id === tempUID)
         if (index != -1) {
           this.layersQueue.splice(index, 1)

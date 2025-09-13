@@ -1,11 +1,10 @@
 {
-  // "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
-  "extends": "./tsconfig.json",
-  // "include": ["src/*"],
-  "include": ["vite.config.*"],
   "compilerOptions": {
     "types": ["node"],
     "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "dist/types"
-  }
+  },
+  "include": ["vite.config.*"],
 }

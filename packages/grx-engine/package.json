@@ -16,6 +16,7 @@
     "chevrotain": "^11.0.3",
     "chokidar": "^4.0.3",
     "comlink": "^4.4.2",
+    "dxf-parser": "^1.1.2",
     "earcut": "^3.0.2",
     "gl-matrix": "^3.4.4",
     "glob": "^11.0.3",

@@ -1,7 +1,7 @@
 import { ActionIcon, Affix, Badge, Code, Divider, ScrollArea, ThemeIcon, Transition, useMantineTheme } from "@mantine/core"
 import { Card, Text } from "@mantine/core"
 import { useEffect, useState, useContext } from "react"
-import { PointerEvents } from "@src/renderer"
+import { PointerEvents } from "@repo/grx-renderer"
 import {
   IconCircle,
   IconLine,
