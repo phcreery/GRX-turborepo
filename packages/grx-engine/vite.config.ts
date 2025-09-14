@@ -5,6 +5,7 @@ import path, { resolve } from "path"
 import { glob } from "glob"
 import dts from "unplugin-dts/vite"
 import arraybuffer from "vite-plugin-arraybuffer"
+import pkg from "./package.json" // Import your package.json
 
 const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/"))
 
@@ -15,6 +16,7 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     minify: false,
+    sourcemap: true,
     lib: {
       entry: "./src/index.ts",
       name: "@repo/grx-engine",
@@ -22,6 +24,8 @@ export default defineConfig({
     },
     rollupOptions: {
       input: inputFiles,
+      // Make sure to externalize deps that shouldn't be bundled
+      external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",

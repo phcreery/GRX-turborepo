@@ -11,7 +11,9 @@ import type { GridSettings, RenderSettings } from "@repo/grx-engine/settings"
 import cozetteFont from "@repo/grx-engine/step/layer/shape/text/cozette/CozetteVector.ttf?url"
 import { fontInfo as cozetteFontInfo } from "@repo/grx-engine/step/layer/shape/text/cozette/font"
 
+console.log(`EngineWorker old: ${EngineWorker}`)
 const Worker = new EngineWorker()
+console.log(`Worker old: ${Worker}`)
 export const RenderEngineBackendComWorker = Comlink.wrap<typeof RenderEngineBackend>(Worker)
 
 export interface RenderEngineFrontendConfig {

@@ -13,6 +13,7 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     minify: false,
+    sourcemap: true,
     lib: {
       entry: "./src/index.ts",
       name: "@repo/grx-renderer",
@@ -20,6 +21,7 @@ export default defineConfig({
     },
     rollupOptions: {
       input: inputFiles,
+      external: ["@repo/grx-engine", "comlink"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",
@@ -31,7 +33,7 @@ export default defineConfig({
   },
   plugins: [
     dts(),
-    react(),
+    // react(),
     // comlink()
   ],
   worker: {
