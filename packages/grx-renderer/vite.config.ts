@@ -1,10 +1,8 @@
 import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import { comlink } from "vite-plugin-comlink"
-import arraybuffer from "vite-plugin-arraybuffer"
 import path, { resolve } from "path"
 import { glob } from "glob"
 import dts from "unplugin-dts/vite"
+import pkg from "./package.json"
 
 const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/"))
 
@@ -16,12 +14,14 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       entry: "./src/index.ts",
-      name: "@repo/grx-renderer",
+      name: pkg.name,
       formats: ["es"],
     },
     rollupOptions: {
       input: inputFiles,
-      external: ["@repo/grx-engine", "comlink"],
+      // Make sure to externalize deps that shouldn't be bundled
+      // external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
+      external: ["@repo/grx-engine", "comlink", "gl-matrix"],
       output: {
         preserveModules: true,
         preserveModulesRoot: "src",
@@ -31,16 +31,8 @@ export default defineConfig({
       },
     },
   },
-  plugins: [
-    dts(),
-    // react(),
-    // comlink()
-  ],
+  plugins: [dts()],
   worker: {
     format: "es",
-    plugins: () => [
-      // comlink(),
-      arraybuffer(),
-    ],
   },
 })

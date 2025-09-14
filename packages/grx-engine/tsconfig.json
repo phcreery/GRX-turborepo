@@ -4,6 +4,8 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
     "types": [
       "vite-plugin-glsl/ext",
       "vite-plugin-arraybuffer/types"

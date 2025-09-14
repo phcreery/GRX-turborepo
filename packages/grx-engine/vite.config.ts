@@ -5,7 +5,7 @@ import path, { resolve } from "path"
 import { glob } from "glob"
 import dts from "unplugin-dts/vite"
 import arraybuffer from "vite-plugin-arraybuffer"
-import pkg from "./package.json" // Import your package.json
+import pkg from "./package.json"
 
 const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/"))
 
@@ -19,7 +19,7 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       entry: "./src/index.ts",
-      name: "@repo/grx-engine",
+      name: pkg.name,
       formats: ["es"],
     },
     rollupOptions: {

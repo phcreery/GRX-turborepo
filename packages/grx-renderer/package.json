@@ -19,7 +19,6 @@
     }
   },
   "dependencies": {
-    "earcut": "^3.0.2",
     "@repo/grx-engine": "workspace:*"
 
   },

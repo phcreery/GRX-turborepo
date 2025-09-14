@@ -1,7 +1,6 @@
 import { resolve } from "path"
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
-import { comlink } from "vite-plugin-comlink"
 import arraybuffer from "vite-plugin-arraybuffer"
 
 export default defineConfig({
@@ -9,7 +8,6 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
-  // root: resolve("src/renderer"),
   resolve: {
     alias: {
       "@src": resolve("src"),
@@ -20,15 +18,5 @@ export default defineConfig({
   build: {
     outDir: resolve("out/web"),
   },
-  plugins: [
-    react(),
-    // comlink()
-  ],
-  worker: {
-    format: "es",
-    plugins: () => [
-      // comlink(),
-      arraybuffer(),
-    ],
-  },
+  plugins: [react()],
 })

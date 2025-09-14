@@ -5,6 +5,8 @@
     // "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
     "types": [
       "vite/client",
       "vite-plugin-glsl/ext",
