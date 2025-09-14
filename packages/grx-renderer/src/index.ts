@@ -1,5 +1,4 @@
 import * as Comlink from "comlink"
-
 import EngineWorker from "@repo/grx-engine/engine?worker"
 import { gridSettings, settings } from "@repo/grx-engine/settings"
 import { UID } from "@repo/grx-engine/utils"
@@ -11,7 +10,9 @@ import type { GridSettings, RenderSettings } from "@repo/grx-engine/settings"
 import cozetteFont from "@repo/grx-engine/step/layer/shape/text/cozette/CozetteVector.ttf?url"
 import { fontInfo as cozetteFontInfo } from "@repo/grx-engine/step/layer/shape/text/cozette/font"
 
+console.log(EngineWorker)
 const Worker = new EngineWorker()
+console.log(Worker)
 export const RenderEngineBackendComWorker = Comlink.wrap<typeof RenderEngineBackend>(Worker)
 
 export interface RenderEngineFrontendConfig {

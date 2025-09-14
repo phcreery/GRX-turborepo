@@ -10,7 +10,7 @@
     "paths": {
       "@src/*": ["src/*"],
     },
-    "types": ["vite-plugin-arraybuffer/types"]
+    "types": ["vite/client", "vite-plugin-arraybuffer/types"]
   },
   "include": ["src/env.d.ts", "**/*", "**/*.tsx"],
 }

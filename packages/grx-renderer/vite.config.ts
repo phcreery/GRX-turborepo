@@ -10,13 +10,12 @@ const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/
 
 export default defineConfig({
   base: "./",
-
   build: {
     emptyOutDir: true,
     minify: false,
     lib: {
       entry: "./src/index.ts",
-      name: "@repo/grx-engine",
+      name: "@repo/grx-renderer",
       formats: ["es"],
     },
     rollupOptions: {
@@ -30,20 +29,16 @@ export default defineConfig({
       },
     },
   },
-  // root: resolve("src/renderer"),
-  resolve: {
-    alias: {
-      "@src": resolve("src"),
-      // /esm/icons/index.mjs only exports the icons statically, so no separate chunks are created
-      "@tabler/icons-react": "@tabler/icons-react/dist/esm/icons/index.mjs",
-    },
-  },
-  // build: {
-  //   outDir: resolve("out/web"),
-  // },
-  plugins: [dts(), react(), comlink()],
+  plugins: [
+    dts(),
+    react(),
+    // comlink()
+  ],
   worker: {
     format: "es",
-    plugins: () => [comlink(), arraybuffer()],
+    plugins: () => [
+      // comlink(),
+      arraybuffer(),
+    ],
   },
 })

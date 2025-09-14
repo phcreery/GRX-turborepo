@@ -20,9 +20,15 @@ export default defineConfig({
   build: {
     outDir: resolve("out/web"),
   },
-  plugins: [react(), comlink()],
+  plugins: [
+    react(),
+    // comlink()
+  ],
   worker: {
     format: "es",
-    plugins: () => [comlink(), arraybuffer()],
+    plugins: () => [
+      // comlink(),
+      arraybuffer(),
+    ],
   },
 })

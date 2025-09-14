@@ -3,8 +3,10 @@
   "extends": "@repo/typescript-config/vite.json",
   "compilerOptions": {
     "lib": ["esnext", "dom"],
+    "baseUrl": ".",
     "outDir": "./dist",
     "types": [
+      "vite/client",
       "vite-plugin-glsl/ext",
       "vite-plugin-arraybuffer/types"
     ],
