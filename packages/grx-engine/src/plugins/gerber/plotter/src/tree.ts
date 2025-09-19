@@ -1,8 +1,6 @@
-import type { Parent } from "unist"
-
 import type { UnitsType } from "@hpcreery/tracespace-parser"
-
-import * as Shapes from "@src/step/layer/shape/shape"
+import type * as Shapes from "@src/step/layer/shape/shape"
+import type { Parent } from "unist"
 
 export type { Polarity } from "@hpcreery/tracespace-parser"
 

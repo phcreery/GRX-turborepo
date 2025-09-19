@@ -1,5 +1,5 @@
-import { SnapMode, ColorBlend, Units } from "./types"
-import { vec4 } from "gl-matrix"
+import type { vec4 } from "gl-matrix"
+import { ColorBlend, SnapMode, type Units } from "./types"
 
 export interface MeasurementSettings {
   units: Units

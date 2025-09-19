@@ -1,7 +1,15 @@
-import { IPlotRecord, FeatureTypeIdentifier, toMap, Binary, IntersectingTypes, AttributeCollection, BoundingBox } from "../../../types"
-import { Transform } from "../../../transform"
-import * as Symbols from "./symbol/symbol"
 import { vec2 } from "gl-matrix"
+import type { Transform } from "../../../transform"
+import {
+  type AttributeCollection,
+  type Binary,
+  type BoundingBox,
+  FeatureTypeIdentifier,
+  type IntersectingTypes,
+  type IPlotRecord,
+  toMap,
+} from "../../../types"
+import * as Symbols from "./symbol/symbol"
 
 export const PAD_RECORD_PARAMETERS = ["index", "x", "y", "sym_num", "resize_factor", "polarity", "rotation", "mirror_x", "mirror_y"] as const
 export const LINE_RECORD_PARAMETERS = ["index", "xs", "ys", "xe", "ye", "sym_num", "polarity"] as const
@@ -697,7 +705,7 @@ export function getBoundingBoxOfShape(record: Shape | Contour_Arc_Segment | Cont
       console.warn("Unknown record type", record)
       break
   }
-  if (isNaN(min[0]) || isNaN(min[1]) || isNaN(max[0]) || isNaN(max[1])) {
+  if (Number.isNaN(min[0]) || Number.isNaN(min[1]) || Number.isNaN(max[0]) || Number.isNaN(max[1])) {
     console.warn("Corrupt Feature Bounding Box", record, min, max)
   }
   return { min, max }

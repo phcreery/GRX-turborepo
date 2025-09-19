@@ -1,13 +1,12 @@
 // see https://github.com/vagran/dxf-viewer/tree/master/src/parser
 import * as Comlink from "comlink"
-import type { IPlugin } from "../../plugins"
-
 import DxfParser from "dxf-parser"
+import type { IPlugin } from "../../plugins"
 import * as converter from "./converter"
 
 // import file from './testdata/noentities.dxf?url'
 
-export const plugin: IPlugin = async (buffer, props, addLayer, addMessage): Promise<void> => {
+export const plugin: IPlugin = async (buffer, props, addLayer, _addMessage): Promise<void> => {
   const decoder = new TextDecoder("utf-8")
   const file = decoder.decode(buffer)
   const parser = new DxfParser()

@@ -1,12 +1,10 @@
 import React, { useMemo } from "react"
 import "../App.css"
-import * as Symbols from "@repo/grx-engine/step/layer/shape/symbol/symbol"
+import { Box, Button, SegmentedControl, Switch } from "@mantine/core"
 import * as Shapes from "@repo/grx-engine/step/layer/shape/shape"
-import { RenderEngine } from "."
-import { Button, Switch, Box, SegmentedControl } from "@mantine/core"
-import { PointerEvent, PointerEvents } from "."
-import { SNAP_MODES, SNAP_MODES_MAP } from "@repo/grx-engine/types"
-import { POINTER_MODES, POINTER_MODES_MAP } from "@repo/grx-engine/types"
+import * as Symbols from "@repo/grx-engine/step/layer/shape/symbol/symbol"
+import { POINTER_MODES, type POINTER_MODES_MAP, SNAP_MODES, type SNAP_MODES_MAP } from "@repo/grx-engine/types"
+import { type PointerEvent, PointerEvents, RenderEngine } from "."
 
 // import gdsiiFile from '@lib/gdsii/testdata/GdsIITests_test.gds?url'
 // import gdsiiFile from "@lib/gdsii/testdata/inv.gds2?arraybuffer"
@@ -25,7 +23,7 @@ import cmp from "@lib/gerber/testdata/boards/bus-pirate/BusPirate-v3.6a-SSOP.cmp
 // import gtl_in from '@lib/gerber/testdata/boards/mini_linux_board_inch/Gerber_TopLayer.GTL?raw'
 // import gtl_mm from "@lib/gerber/testdata/boards/mini_linux_board_mm/Gerber_TopLayer.GTL?arraybuffer"
 
-import { LayerRendererProps } from "@repo/grx-engine/step/layer/layer"
+import type { LayerRendererProps } from "@repo/grx-engine/step/layer/layer"
 
 const N_PADS = 0
 const N_LINES = 0
@@ -444,7 +442,7 @@ const SYMBOLS: Symbols.StandardSymbol[] = []
 
 new Array<number>(Symbols.STANDARD_SYMBOLS.length).fill(0).map((_, i) => {
   const sym = new Symbols.StandardSymbol({
-    id: "symbol" + i, // id
+    id: `symbol${i}`, // id
     symbol: i, // symbol
     width: 0.01, // width, square side, diameter
     height: 0.01, // height
@@ -792,7 +790,7 @@ const MACROS_ARRAY: Symbols.Symbol[] = []
 new Array<number>(10).fill(0).map((_, i) => {
   MACROS_ARRAY.push(
     new Symbols.MacroSymbol({
-      id: "macro" + i, // id
+      id: `macro${i}`, // id
       shapes: [
         // PAD_RECORDS_ARRAY[i],
         // PAD_RECORDS_ARRAY[i + 1],
@@ -887,7 +885,7 @@ const FLATTEN_MACROS_ARRAY: Symbols.Symbol[] = []
 new Array<number>(1).fill(0).map((_, i) => {
   FLATTEN_MACROS_ARRAY.push(
     new Symbols.MacroSymbol({
-      id: "macro" + i, // id
+      id: `macro${i}`, // id
       shapes: OVERLAPPING_PADS_ARRAY,
       // flattenening a macro will cause the macro to be drawn as a single shape, rather than as a collection of shapes.
       // negative shapes within the macro will be subtracted from the positive shapes and not have an effect on the rest of the image.
@@ -902,7 +900,7 @@ const UNFLATTEN_MACROS_ARRAY: Symbols.Symbol[] = []
 new Array<number>(1).fill(0).map((_, i) => {
   UNFLATTEN_MACROS_ARRAY.push(
     new Symbols.MacroSymbol({
-      id: "macro" + i, // id
+      id: `macro${i}`, // id
       shapes: OVERLAPPING_PADS_ARRAY,
       // flattenening a macro will cause the macro to be drawn as a single shape, rather than as a collection of shapes.
       // negative shapes within the macro will be subtracted from the positive shapes and not have an effect on the rest of the image.
@@ -917,7 +915,7 @@ const SPOOF_OVERLAPPING_MACROS_ARRAY: Symbols.Symbol[] = []
 new Array<number>(1).fill(0).map((_, i) => {
   SPOOF_OVERLAPPING_MACROS_ARRAY.push(
     new Symbols.MacroSymbol({
-      id: "macro" + i, // id
+      id: `macro${i}`, // id
       shapes: [OVERLAPPING_PADS_ARRAY[0]],
       // flattenening a macro will cause the macro to be drawn as a single shape, rather than as a collection of shapes.
       // negative shapes within the macro will be subtracted from the positive shapes and not have an effect on the rest of the image.
@@ -1475,9 +1473,7 @@ function DemoApp(): JSX.Element {
       units: "mm",
     })
 
-    Engine.addFile("box2",
-      cmp,
-      {
+    Engine.addFile("box2", cmp, {
       format: "rs274x",
       props: {
         name: "cmp",
@@ -2099,9 +2095,9 @@ function DemoApp(): JSX.Element {
         pos2 = 0,
         pos3 = 0,
         pos4 = 0
-      if (document.getElementById(elmnt.id + "header")) {
+      if (document.getElementById(`${elmnt.id}header`)) {
         // if present, the header is where you move the DIV from:
-        document.getElementById(elmnt.id + "header")!.onmousedown = dragMouseDown
+        document.getElementById(`${elmnt.id}header`)!.onmousedown = dragMouseDown
       } else {
         // otherwise, move the DIV from anywhere inside the DIV:
         elmnt.onmousedown = dragMouseDown
@@ -2125,8 +2121,8 @@ function DemoApp(): JSX.Element {
         pos3 = e.clientX
         pos4 = e.clientY
         // set the element's new position:
-        elmnt.style.top = elmnt.offsetTop - pos2 + "px"
-        elmnt.style.left = elmnt.offsetLeft - pos1 + "px"
+        elmnt.style.top = `${elmnt.offsetTop - pos2}px`
+        elmnt.style.left = `${elmnt.offsetLeft - pos1}px`
       }
 
       function closeDragElement(): void {
@@ -2410,7 +2406,7 @@ function REGLStatsWidget(props: { engine: RenderEngine }): JSX.Element {
   const [elementsCount, setElementsCount] = React.useState<number>(0)
 
   const round = (value: number, precision: number): number => {
-    const multiplier = Math.pow(10, precision || 0)
+    const multiplier = 10 ** (precision || 0)
     return Math.round(value * multiplier) / multiplier
   }
 

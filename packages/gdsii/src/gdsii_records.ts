@@ -1,6 +1,6 @@
-import * as TREE from "./gdsii_tree"
+import type * as TREE from "./gdsii_tree"
+import type { ParserState } from "./parser"
 import * as utils from "./utils"
-import { ParserState } from "./parser"
 
 // GDSII format references:
 // http://boolean.klaasholwerda.nl/interface/bnf/GDSII.html
@@ -27,7 +27,7 @@ export type RecordDefinition = {
 }
 
 export const RecordDefinitions: { [key: number]: RecordDefinition } = {
-  0x00: {
+  0: {
     name: "HEADER",
     dataType: DataType.TwoByteSignedInteger,
     description: "File header (version number, date, time)",
@@ -37,7 +37,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x01: {
+  1: {
     name: "BGNLIB",
     dataType: DataType.TwoByteSignedInteger,
     description: "Library begin, last modification date and time",
@@ -55,7 +55,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x02: {
+  2: {
     name: "LIBNAME",
     dataType: DataType.ASCIIString,
     description: "Library name",
@@ -65,7 +65,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x03: {
+  3: {
     name: "UNITS",
     dataType: DataType.EightByteReal,
     description: "Database units, size of database unit in user units",
@@ -76,13 +76,13 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x04: {
+  4: {
     name: "ENDLIB",
     dataType: DataType.NoData,
     description: "Library end",
     parse: (_state, _data) => {},
   },
-  0x05: {
+  5: {
     name: "BGNSTR",
     dataType: DataType.TwoByteSignedInteger,
     description: "Structure begin, last modification date and time",
@@ -100,7 +100,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x06: {
+  6: {
     name: "STRNAME",
     dataType: DataType.ASCIIString,
     description: "Structure name",
@@ -110,7 +110,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x07: {
+  7: {
     name: "ENDSTR",
     dataType: DataType.NoData,
     description: "Structure end",
@@ -119,7 +119,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.cell = {}
     },
   },
-  0x08: {
+  8: {
     name: "BOUNDARY",
     dataType: DataType.NoData,
     description: "Boundary element",
@@ -127,7 +127,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.element = { type: "boundary" }
     },
   },
-  0x09: {
+  9: {
     name: "PATH",
     dataType: DataType.NoData,
     description: "Path element",
@@ -135,7 +135,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.element = { type: "path" }
     },
   },
-  0x0a: {
+  10: {
     name: "SREF",
     dataType: DataType.NoData,
     description: "Structure reference element",
@@ -143,7 +143,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.element = { type: "sref" }
     },
   },
-  0x0b: {
+  11: {
     name: "AREF",
     dataType: DataType.NoData,
     description: "Array reference element",
@@ -151,7 +151,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.element = { type: "aref" }
     },
   },
-  0x0c: {
+  12: {
     name: "TEXT",
     dataType: DataType.NoData,
     description: "Text element",
@@ -159,7 +159,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.element = { type: "text" }
     },
   },
-  0x0d: {
+  13: {
     name: "LAYER",
     dataType: DataType.TwoByteSignedInteger,
     description: "Layer number",
@@ -170,7 +170,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x0e: {
+  14: {
     name: "DATATYPE",
     dataType: DataType.TwoByteSignedInteger,
     description: "Data type",
@@ -181,7 +181,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x0f: {
+  15: {
     name: "WIDTH",
     dataType: DataType.FourByteSignedInteger,
     description: "Width",
@@ -192,7 +192,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x10: {
+  16: {
     name: "XY",
     dataType: DataType.TwoByteSignedInteger,
     description: "Point list",
@@ -208,7 +208,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       ;(state.el as ElsWithXY).XY = xy
     },
   },
-  0x11: {
+  17: {
     name: "ENDEL",
     dataType: DataType.NoData,
     description: "Element end",
@@ -224,7 +224,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.strans = {}
     },
   },
-  0x12: {
+  18: {
     name: "SNAME",
     dataType: DataType.ASCIIString,
     description: "Structure name. Contains the name of a referenced structure",
@@ -235,7 +235,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x13: {
+  19: {
     name: "COLROW",
     dataType: DataType.TwoByteSignedInteger,
     description: "Columns, rows",
@@ -247,12 +247,12 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x15: {
+  21: {
     name: "NODE",
     dataType: DataType.NoData,
     description: "Node element",
   },
-  0x16: {
+  22: {
     name: "TEXTTYPE",
     dataType: DataType.TwoByteSignedInteger,
     description: "Text type",
@@ -263,7 +263,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x17: {
+  23: {
     name: "PRESENTATION",
     dataType: DataType.TwoByteSignedInteger,
     description: "Presentation",
@@ -276,7 +276,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x19: {
+  25: {
     name: "STRING",
     dataType: DataType.ASCIIString,
     description: "String",
@@ -287,7 +287,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x1a: {
+  26: {
     name: "STRANS",
     dataType: DataType.TwoByteSignedInteger,
     description: "Transformation",
@@ -302,7 +302,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x1b: {
+  27: {
     name: "MAG",
     dataType: DataType.EightByteReal,
     description: "MAG",
@@ -312,7 +312,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x1c: {
+  28: {
     name: "ANGLE",
     dataType: DataType.EightByteReal,
     description: "ANGLE",
@@ -322,17 +322,17 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x1f: {
+  31: {
     name: "REFLIBS",
     dataType: DataType.ASCIIString,
     description: "REFLIBS",
   },
-  0x20: {
+  32: {
     name: "FONTS",
     dataType: DataType.ASCIIString,
     description: "FONTS",
   },
-  0x21: {
+  33: {
     name: "PATHTYPE",
     dataType: DataType.TwoByteSignedInteger,
     description: "PATHTYPE",
@@ -343,17 +343,17 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x22: {
+  34: {
     name: "GENERATIONS",
     dataType: DataType.TwoByteSignedInteger,
     description: "GENERATIONS",
   },
-  0x23: {
+  35: {
     name: "ATTRTABLE",
     dataType: DataType.ASCIIString,
     description: "ATTRTABLE",
   },
-  0x26: {
+  38: {
     name: "ELFLAGS",
     dataType: DataType.TwoByteSignedInteger,
     description: "ELFLAGS",
@@ -365,7 +365,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x2a: {
+  42: {
     name: "NODETYPE",
     dataType: DataType.TwoByteSignedInteger,
     description: "NODETYPE",
@@ -376,7 +376,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x2b: {
+  43: {
     name: "PROPATTR",
     dataType: DataType.TwoByteSignedInteger,
     description: "PROPATTR",
@@ -386,7 +386,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x2c: {
+  44: {
     name: "PROPVALUE",
     dataType: DataType.ASCIIString,
     description: "PROPVALUE",
@@ -400,7 +400,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.property = {}
     },
   },
-  0x2d: {
+  45: {
     name: "BOX",
     dataType: DataType.NoData,
     description: "BOX",
@@ -408,12 +408,12 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       state.element = { type: "box" }
     },
   },
-  0x2e: {
+  46: {
     name: "BOXTYPE",
     dataType: DataType.TwoByteSignedInteger,
     description: "BOXTYPE",
   },
-  0x2f: {
+  47: {
     name: "PLEX",
     dataType: DataType.FourByteSignedInteger,
     description: "PLEX",
@@ -424,7 +424,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x30: {
+  48: {
     name: "BGNEXTN",
     dataType: DataType.FourByteSignedInteger,
     description:
@@ -436,7 +436,7 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       }
     },
   },
-  0x31: {
+  49: {
     name: "ENDEXTN",
     dataType: DataType.FourByteSignedInteger,
     description:
@@ -448,32 +448,32 @@ export const RecordDefinitions: { [key: number]: RecordDefinition } = {
       })
     },
   },
-  0x32: {
+  50: {
     name: "TAPENUM",
     dataType: DataType.TwoByteSignedInteger,
     description: "TAPENUM",
   },
-  0x33: {
+  51: {
     name: "TAPECODE",
     dataType: DataType.TwoByteSignedInteger,
     description: "TAPECODE",
   },
-  0x34: {
+  52: {
     name: "STRCLASS",
     dataType: DataType.TwoByteSignedInteger,
     description: "STRCLASS",
   },
-  0x36: {
+  54: {
     name: "FORMAT",
     dataType: DataType.TwoByteSignedInteger,
     description: "FORMAT",
   },
-  0x37: {
+  55: {
     name: "MASK",
     dataType: DataType.ASCIIString,
     description: "MASK",
   },
-  0x38: {
+  56: {
     name: "ENDMASKS",
     dataType: DataType.NoData,
     description: "ENDMASKS",

@@ -1,8 +1,8 @@
-import React from "react"
 import { Flex, Textarea } from "@mantine/core"
-import { Shape } from "@src/step/layer/shape/shape"
-import { parser, NCLexer, NCToShapesVisitor } from "./parser/parser"
-import { CstNode } from "chevrotain"
+import type { Shape } from "@src/step/layer/shape/shape"
+import type { CstNode } from "chevrotain"
+import React from "react"
+import { NCLexer, NCToShapesVisitor, parser } from "./parser/parser"
 
 const drill = `T01`
 
@@ -31,7 +31,7 @@ export default function NCDemo(): JSX.Element {
       console.log(result)
       if (parser.errors.length > 0) {
         parser.errors.forEach((e) => console.error("PARSER ERROR: ", e.message))
-        setError(parser.errors.map((e, i) => "[ PARSER ERROR " + (i + 1) + ":" + e.message + " ]").join("\n") + "\n")
+        setError(`${parser.errors.map((e, i) => `[ PARSER ERROR ${i + 1}:${e.message} ]`).join("\n")}\n`)
       } else {
         setError(undefined)
       }

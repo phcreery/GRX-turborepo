@@ -1,7 +1,6 @@
-import { resolve } from "path"
-import { defineConfig } from "vite"
+import { resolve } from "node:path"
 import react from "@vitejs/plugin-react"
-import arraybuffer from "vite-plugin-arraybuffer"
+import { defineConfig } from "vite"
 
 export default defineConfig({
   base: "./",
@@ -16,7 +15,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: resolve("out/web"),
+    outDir: resolve("dist/"),
   },
   plugins: [react()],
 })

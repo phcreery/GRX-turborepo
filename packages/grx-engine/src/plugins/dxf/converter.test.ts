@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest"
+import type * as Shapes from "@src/step/layer/shape/shape"
+import { FeatureTypeIdentifier, type FeatureTypeIdentifiers } from "@src/types"
 import DxfParser from "dxf-parser"
+import { describe, expect, it } from "vitest"
 import * as converter from "./converter"
-import * as Shapes from "@src/step/layer/shape/shape"
-import { FeatureTypeIdentifiers, FeatureTypeIdentifier } from "@src/types"
 
 const EPSILON = 0.0001
 
@@ -162,10 +162,10 @@ function insertTest(): void {
       expect(Object.keys(layerHierarchy)).to.include("MyLayer")
     })
     it("should have correct shape", () => {
-      expect(layerHierarchy["MyLayer"].shapes.length).to.equal(3)
-      const insert0 = layerHierarchy["MyLayer"].shapes[0] as Shapes.StepAndRepeat
-      const insert1 = layerHierarchy["MyLayer"].shapes[1] as Shapes.StepAndRepeat
-      const insert2 = layerHierarchy["MyLayer"].shapes[2] as Shapes.StepAndRepeat
+      expect(layerHierarchy.MyLayer.shapes.length).to.equal(3)
+      const insert0 = layerHierarchy.MyLayer.shapes[0] as Shapes.StepAndRepeat
+      const insert1 = layerHierarchy.MyLayer.shapes[1] as Shapes.StepAndRepeat
+      const insert2 = layerHierarchy.MyLayer.shapes[2] as Shapes.StepAndRepeat
       const shape0 = insert0.shapes[0] as Shapes.Line
       const shape1 = insert1.shapes[0] as Shapes.Line
       const shape2 = insert2.shapes[0] as Shapes.Line

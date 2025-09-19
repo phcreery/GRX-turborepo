@@ -81,7 +81,7 @@ class Vector4 {
         this.w = value
         break
       default:
-        throw new Error("index is out of range: " + index)
+        throw new Error(`index is out of range: ${index}`)
     }
 
     return this
@@ -98,7 +98,7 @@ class Vector4 {
       case 3:
         return this.w
       default:
-        throw new Error("index is out of range: " + index)
+        throw new Error(`index is out of range: ${index}`)
     }
   }
 
@@ -290,8 +290,8 @@ class Vector4 {
 
         if (xx < epsilon) {
           x = 0
-          y = 0.707106781
-          z = 0.707106781
+          y = Math.SQRT1_2
+          z = Math.SQRT1_2
         } else {
           x = Math.sqrt(xx)
           y = xy / x
@@ -301,9 +301,9 @@ class Vector4 {
         // m22 is the largest diagonal term
 
         if (yy < epsilon) {
-          x = 0.707106781
+          x = Math.SQRT1_2
           y = 0
-          z = 0.707106781
+          z = Math.SQRT1_2
         } else {
           y = Math.sqrt(yy)
           x = xy / y
@@ -313,8 +313,8 @@ class Vector4 {
         // m33 is the largest diagonal term so base result on this
 
         if (zz < epsilon) {
-          x = 0.707106781
-          y = 0.707106781
+          x = Math.SQRT1_2
+          y = Math.SQRT1_2
           z = 0
         } else {
           z = Math.sqrt(zz)

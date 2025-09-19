@@ -1,7 +1,7 @@
-import REGL from "regl"
-import { UniverseContext } from "../../../../engine"
 import { vec2, vec3 } from "gl-matrix"
-import { WorldContext } from "../../../step"
+import type REGL from "regl"
+import type { UniverseContext } from "../../../../engine"
+import type { WorldContext } from "../../../step"
 
 export interface FontInfo {
   fontSize: vec2

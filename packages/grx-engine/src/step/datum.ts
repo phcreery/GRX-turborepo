@@ -1,8 +1,8 @@
-import REGL from "regl"
-import { UniverseContext } from "../engine"
-import { DatumPoint, DatumText } from "./layer/shape/shape"
 import { vec2, vec3 } from "gl-matrix"
-import { WorldContext } from "./step"
+import type REGL from "regl"
+import type { UniverseContext } from "../engine"
+import type { DatumPoint, DatumText } from "./layer/shape/shape"
+import type { WorldContext } from "./step"
 
 /**
  * @deprecated Use Shaer version instead

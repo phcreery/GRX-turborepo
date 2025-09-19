@@ -1,16 +1,20 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**"]
-    },
-    "lint": {},
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "start": {},
+    "lint": {},
+    "format": {},
+    "typecheck": {
+      "outputs": []
     }
   }
 }

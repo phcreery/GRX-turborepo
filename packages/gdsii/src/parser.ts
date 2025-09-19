@@ -1,8 +1,8 @@
 import * as GDSII from "./gdsii_records"
-import * as TREE from "./gdsii_tree"
+import type * as TREE from "./gdsii_tree"
 import messages from "./messages"
 
-import { RecordToken } from "./types"
+import type { RecordToken } from "./types"
 
 export interface ParserState {
   bnf: Partial<TREE.GDSIIBNF>

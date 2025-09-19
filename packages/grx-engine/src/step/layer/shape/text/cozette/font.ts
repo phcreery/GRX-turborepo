@@ -1,6 +1,6 @@
 import { vec2 } from "gl-matrix"
-import { characters } from "./characters"
 import type { FontInfo } from "../canvasText"
+import { characters } from "./characters"
 
 const fontWidth = 13
 const fontHeight = 13

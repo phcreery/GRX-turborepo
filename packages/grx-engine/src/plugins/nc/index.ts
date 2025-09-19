@@ -1,7 +1,6 @@
+import type { AddLayerProps } from "@src/plugins"
 import * as Comlink from "comlink"
-
-import { parser, NCLexer, NCToShapesVisitor } from "./parser/parser"
-import { AddLayerProps } from "@src/plugins"
+import { NCLexer, NCToShapesVisitor, parser } from "./parser/parser"
 
 export async function plugin(buffer: ArrayBuffer, props: Partial<AddLayerProps>, addLayer: (params: AddLayerProps) => void): Promise<void> {
   console.time("decode")

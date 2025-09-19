@@ -1,7 +1,7 @@
 import * as GDSII from "./gdsii_records"
-import struct from "./struct"
-import { RecordToken } from "./types"
 import messages from "./messages"
+import struct from "./struct"
+import type { RecordToken } from "./types"
 // LEXER
 
 // Generator for complete records from a GDSII stream file.
@@ -71,7 +71,7 @@ function eightByteRealToFloat(value: ArrayBuffer): number {
   const exponent = (short1 & 0x7f00) / 256 - 64
   const mantissa = (((short1 & 0x00ff) * 65536 + short2) * 4294967296 + long3) / 72057594037927936.0
   if (short1 & 0x8000) {
-    return -mantissa * Math.pow(16.0, exponent)
+    return -mantissa * 16.0 ** exponent
   }
-  return mantissa * Math.pow(16.0, exponent)
+  return mantissa * 16.0 ** exponent
 }

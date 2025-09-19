@@ -24,7 +24,7 @@
 //      Ends the definition of a character.
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const characterSet = [
+const _characterSet = [
   "!",
   '"',
   "#",

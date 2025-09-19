@@ -1,23 +1,27 @@
-import REGL from "regl"
-import { vec2, vec3, mat3 } from "gl-matrix"
+import { mat3, vec2, vec3 } from "gl-matrix"
+import type REGL from "regl"
+import type { UniverseContext } from "../../engine"
+import ShapeTransform from "../../transform"
+import { type BoundingBox, FeatureTypeIdentifier, SNAP_MODES_MAP } from "../../types"
+import { getScaleMat3 } from "../../utils"
+import type { WorldContext } from "../step"
+import {
+  DatumShaderCollection,
+  DatumTextShaderCollection,
+  MacroShaderCollection,
+  ReglRenderers,
+  ShapesShaderCollection,
+  StepAndRepeatCollection,
+  type TLoadedReglRenderers,
+} from "./collections"
 import * as Shapes from "./shape/shape"
 import * as Symbols from "./shape/symbol/symbol"
-import { BoundingBox, FeatureTypeIdentifier, SNAP_MODES_MAP } from "../../types"
-import ShapeTransform from "../../transform"
-
-import { DatumShaderCollection, DatumTextShaderCollection, ReglRenderers, TLoadedReglRenderers } from "./collections"
-
-import { ShapesShaderCollection, MacroShaderCollection, StepAndRepeatCollection } from "./collections"
-
-import type { UniverseContext } from "../../engine"
-import { getScaleMat3 } from "../../utils"
-import { WorldContext } from "../step"
 
 const { SYMBOL_PARAMETERS_MAP, STANDARD_SYMBOLS_MAP } = Symbols
 
 import { settings } from "../../settings"
 
-interface CommonAttributes {}
+type CommonAttributes = {}
 
 interface CommonUniforms {
   u_Transform: mat3
@@ -35,7 +39,7 @@ interface QueryUniforms {
   u_Alpha: number
   u_PointerPosition: vec2
 }
-interface QueryAttributes {}
+type QueryAttributes = {}
 
 interface QueryProps {
   pointer: vec2

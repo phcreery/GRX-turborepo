@@ -1,22 +1,22 @@
-import REGL from "regl"
-import { mat3, vec2, vec3 } from "gl-matrix"
-import LayerRenderer, { LayerRendererProps } from "./layer/layer"
-import { ReglRenderers, TLoadedReglRenderers } from "./layer/collections"
-import * as Shapes from "./layer/shape/shape"
 import * as Comlink from "comlink"
-import { getPlugins } from "../plugins"
-import type { IPlugin, PluginMap, AddLayerProps } from "../plugins"
-import { type Units, type BoundingBox, FeatureTypeIdentifier, SNAP_MODES_MAP, SnapMode, ColorBlend, ViewBox } from "../types"
-import Transform from "../transform"
-import { UID } from "../utils"
-import { SimpleMeasurement } from "./measurements"
-import { ShapeDistance } from "./layer/shape-renderer"
-import type { RenderSettings } from "../settings"
-import { settings, origin, gridSettings } from "../settings"
-import ShapeTransform from "../transform"
+import { mat3, vec2, type vec3 } from "gl-matrix"
+import type REGL from "regl"
 import { TypedEventTarget } from "typescript-event-target"
+import type { AddLayerProps, IPlugin, PluginMap } from "../plugins"
+import { getPlugins } from "../plugins"
+import type { RenderSettings } from "../settings"
+import { gridSettings, origin, settings } from "../settings"
+import type Transform from "../transform"
+import ShapeTransform from "../transform"
+import { type BoundingBox, ColorBlend, FeatureTypeIdentifier, SNAP_MODES_MAP, SnapMode, type Units, type ViewBox } from "../types"
+import { UID } from "../utils"
+import { ReglRenderers, type TLoadedReglRenderers } from "./layer/collections"
+import LayerRenderer, { type LayerRendererProps } from "./layer/layer"
+import type * as Shapes from "./layer/shape/shape"
+import type { ShapeDistance } from "./layer/shape-renderer"
+import { SimpleMeasurement } from "./measurements"
 
-export interface WorldProps {}
+export type WorldProps = {}
 
 interface WorldUniforms {
   u_Transform: mat3
@@ -413,11 +413,11 @@ export class StepRenderer {
     }
     const plugins = getPlugins()
     if (!Object.keys(plugins).includes(params.format)) {
-      console.error("No parser found for format: " + params.format)
-      this.sendMessage({ level: MessageLevel.ERROR, title: "File Load Error", message: "No parser found for format: " + params.format })
+      console.error(`No parser found for format: ${params.format}`)
+      this.sendMessage({ level: MessageLevel.ERROR, title: "File Load Error", message: `No parser found for format: ${params.format}` })
       return
     }
-    const PluginWorker = plugins[params.format]!.PluginWorker
+    const PluginWorker = plugins[params.format]?.PluginWorker
     if (PluginWorker) {
       const tempUID = UID()
       this.layersQueue.push({ name: params.props.name || "", id: tempUID })
@@ -444,8 +444,8 @@ export class StepRenderer {
         this.sendMessage({ level: MessageLevel.INFO, title: "File Loaded", message: "File loaded successfully" })
       }
     } else {
-      console.error("No parser found for format: " + params.format)
-      this.sendMessage({ level: MessageLevel.ERROR, title: "File Load Error", message: "No parser found for format: " + params.format })
+      console.error(`No parser found for format: ${params.format}`)
+      this.sendMessage({ level: MessageLevel.ERROR, title: "File Load Error", message: `No parser found for format: ${params.format}` })
     }
   }
 
@@ -587,7 +587,7 @@ export class StepRenderer {
   public snap(pointer: vec2): vec2 {
     if (settings.SNAP_MODE == SnapMode.OFF) return pointer
 
-    let closest: ShapeDistance | undefined = undefined
+    let closest: ShapeDistance | undefined
     this.world((context) => {
       for (const layer of this.layers) {
         if (!layer.visible) continue
@@ -670,7 +670,8 @@ export class StepRenderer {
     if (boundingBox.min[0] === Infinity || boundingBox.min[1] === Infinity || boundingBox.max[0] === -Infinity || boundingBox.max[1] === -Infinity)
       return
     if (boundingBox.min[0] > boundingBox.max[0] || boundingBox.min[1] > boundingBox.max[1]) return
-    if (isNaN(boundingBox.min[0]) || isNaN(boundingBox.min[1]) || isNaN(boundingBox.max[0]) || isNaN(boundingBox.max[1])) return
+    if (Number.isNaN(boundingBox.min[0]) || Number.isNaN(boundingBox.min[1]) || Number.isNaN(boundingBox.max[0]) || Number.isNaN(boundingBox.max[1]))
+      return
 
     if (bbAR > screenAR) {
       const zoom = screenWidthPx / bbWidthPx

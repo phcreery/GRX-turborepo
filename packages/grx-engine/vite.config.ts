@@ -1,10 +1,10 @@
-import { defineConfig } from "vite"
-import { comlink } from "vite-plugin-comlink"
-import glslify from "rollup-plugin-glslify"
-import path, { resolve } from "path"
+import path, { resolve } from "node:path"
 import { glob } from "glob"
+import glslify from "rollup-plugin-glslify"
 import dts from "unplugin-dts/vite"
+import { defineConfig } from "vite"
 import arraybuffer from "vite-plugin-arraybuffer"
+import { comlink } from "vite-plugin-comlink"
 import pkg from "./package.json"
 
 const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/"))
@@ -45,7 +45,7 @@ export default defineConfig({
     comlink(),
     glslify({
       compress: false,
-      // @ts-ignore - glslify options are not typed
+      // @ts-expect-error - glslify options are not typed
       transform: ["glslify-import"],
     }),
   ],
@@ -56,7 +56,7 @@ export default defineConfig({
       arraybuffer(),
       glslify({
         compress: false,
-        // @ts-ignore - glslify options are not typed
+        // @ts-expect-error - glslify options are not typed
         transform: ["glslify-import"],
       }),
     ],

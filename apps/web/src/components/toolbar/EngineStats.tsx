@@ -1,8 +1,8 @@
-import { useEffect, useContext, useState } from "react"
-import { Table, TableData } from "@mantine/core"
+import { Table, type TableData } from "@mantine/core"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
+import { useContext, useEffect, useState } from "react"
 
-interface EngineStatsProps {}
+type EngineStatsProps = {}
 export default function EngineStats(_props: EngineStatsProps): JSX.Element {
   const { renderEngine } = useContext(EditorConfigProvider)
   const [count, setCount] = useState<number>(0)
@@ -22,7 +22,7 @@ export default function EngineStats(_props: EngineStatsProps): JSX.Element {
   const [elementsCount, setElementsCount] = useState<number>(0)
 
   const round = (value: number, precision: number): number => {
-    const multiplier = Math.pow(10, precision || 0)
+    const multiplier = 10 ** (precision || 0)
     return Math.round(value * multiplier) / multiplier
   }
 

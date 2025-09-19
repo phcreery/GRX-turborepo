@@ -1,11 +1,11 @@
-import React from "react"
-import { ThemeConfigProvider } from "@src/contexts/ThemeContext"
-import { EditorConfigProvider } from "@src/contexts/EditorContext"
-import chroma from "chroma-js"
-import { Text, Switch, Divider, Group, Flex, useMantineTheme, useMantineColorScheme, ColorPicker, Radio } from "@mantine/core"
+import { ColorPicker, Divider, Flex, Group, Radio, Switch, Text, useMantineColorScheme, useMantineTheme } from "@mantine/core"
 import { useLocalStorage } from "@mantine/hooks"
+import { EditorConfigProvider } from "@src/contexts/EditorContext"
+import { ThemeConfigProvider } from "@src/contexts/ThemeContext"
+import chroma from "chroma-js"
+import React from "react"
 
-interface SettingsModalProps {}
+type SettingsModalProps = {}
 
 export default function GeneralSettingsModal(_props: SettingsModalProps): JSX.Element | null {
   const { units, setUnits, renderEngine } = React.useContext(EditorConfigProvider)

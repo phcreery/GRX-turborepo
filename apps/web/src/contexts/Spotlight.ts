@@ -1,4 +1,4 @@
-import { createSpotlight, SpotlightActionData } from "@mantine/spotlight"
+import { createSpotlight, type SpotlightActionData } from "@mantine/spotlight"
 
 export const [spotlightStore, spotlight] = createSpotlight()
 

@@ -1,33 +1,32 @@
-import { useState, useEffect, useContext } from "react"
-import { Button, Popover, ColorPicker, useMantineTheme, Tooltip, useMantineColorScheme } from "@mantine/core"
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import { Button, ColorPicker, Popover, Tooltip, useMantineColorScheme, useMantineTheme } from "@mantine/core"
 import { notifications } from "@mantine/notifications"
-import chroma from "chroma-js"
-import { useGesture } from "@use-gesture/react"
-import { animated, SpringValue, useSpring } from "@react-spring/web"
-import { UploadFile } from "./LayersSidebar"
+import { animated, type SpringValue, useSpring } from "@react-spring/web"
+import { EditorConfigProvider } from "@src/contexts/EditorContext"
+import type { LayerInfo } from "@src/renderer/engine/engine"
 import {
-  IconCircleFilled,
   IconCircleDotted,
-  IconTrashX,
-  IconPerspective,
+  IconCircleFilled,
+  IconClearAll,
+  IconColorPicker,
+  IconContrast,
+  IconContrastOff,
   IconEye,
   IconEyeOff,
-  IconColorPicker,
-  IconContrastOff,
-  IconContrast,
-  IconClearAll,
   IconGripVertical,
+  IconPerspective,
+  IconTrashX,
 } from "@tabler/icons-react"
-import { ContextMenuContent, ShowContextMenuFunction, useContextMenu } from "mantine-contextmenu"
-import type { LayerInfo } from "@src/renderer/engine/engine"
-import { vec3 } from "gl-matrix"
-import LayerTransform from "./transform/LayerTransform"
-import { EditorConfigProvider } from "@src/contexts/EditorContext"
-
-import { CSS } from "@dnd-kit/utilities"
-import { useSortable } from "@dnd-kit/sortable"
-import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types"
+import { useGesture } from "@use-gesture/react"
+import type { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types"
+import chroma from "chroma-js"
 import * as Comlink from "comlink"
+import { vec3 } from "gl-matrix"
+import { type ContextMenuContent, type ShowContextMenuFunction, useContextMenu } from "mantine-contextmenu"
+import { useContext, useEffect, useState } from "react"
+import type { UploadFile } from "./LayersSidebar"
+import LayerTransform from "./transform/LayerTransform"
 
 interface LayerListItemProps {
   file: UploadFile
@@ -307,9 +306,7 @@ function DraggableLayer(props: DraggableLayerProps): JSX.Element {
         if (reader.result !== null && reader.result !== undefined) {
           try {
             console.time(`${file.name} file parse time`)
-            await renderer.addFile("main",
-              Comlink.transfer(reader.result as ArrayBuffer, [reader.result as ArrayBuffer]),
-              {
+            await renderer.addFile("main", Comlink.transfer(reader.result as ArrayBuffer, [reader.result as ArrayBuffer]), {
               format: file.format,
               props: {
                 name: file.name,

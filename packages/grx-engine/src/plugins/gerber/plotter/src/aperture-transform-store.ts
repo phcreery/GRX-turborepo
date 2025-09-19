@@ -1,10 +1,5 @@
-import type { Polarity, Mirroring, Rotation, Scaling } from "@hpcreery/tracespace-parser"
-import type { GerberNode } from "@hpcreery/tracespace-parser"
-import { LOAD_MIRRORING, LOAD_POLARITY, LOAD_ROTATION, LOAD_SCALING } from "@hpcreery/tracespace-parser"
-import {
-  DARK,
-  // CLEAR
-} from "@hpcreery/tracespace-parser"
+import type { GerberNode, Mirroring, Polarity, Rotation, Scaling } from "@hpcreery/tracespace-parser"
+import { DARK, LOAD_MIRRORING, LOAD_POLARITY, LOAD_ROTATION, LOAD_SCALING } from "@hpcreery/tracespace-parser"
 
 export interface ApertureTransform {
   polarity: Polarity

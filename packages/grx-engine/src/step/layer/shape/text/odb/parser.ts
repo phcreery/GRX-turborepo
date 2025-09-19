@@ -1,5 +1,4 @@
-import { Lexer, createToken, CstParser, CstNode, ParserMethod, IToken, Rule } from "chevrotain"
-import { generateCstDts } from "chevrotain"
+import { type CstNode, CstParser, createToken, generateCstDts, type IToken, Lexer, type ParserMethod, type Rule } from "chevrotain"
 import standardFont from "./standard?raw"
 
 const SHXTokens = {

@@ -1,5 +1,5 @@
 // import { ColorScheme } from '@mantine/core'
-import React from 'react'
+import React from "react"
 
 export interface ThemeContext {
   transparency: boolean
@@ -11,6 +11,6 @@ export interface ThemeContext {
 export const ThemeConfigProvider = React.createContext<ThemeContext>({
   transparency: true,
   setTransparency: () => {},
-  primaryColor: 'teal',
+  primaryColor: "teal",
   setPrimaryColor: () => {},
 })

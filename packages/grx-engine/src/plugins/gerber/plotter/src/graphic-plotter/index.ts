@@ -1,31 +1,30 @@
 // Graphic plotter
 // Takes nodes and turns them into graphics to be added to the image
-import * as Tree from "../tree"
+
 import {
-  GerberNode,
-  GraphicType,
-  DARK,
-  LOAD_POLARITY,
-  GRAPHIC,
-  SHAPE,
-  SEGMENT,
-  MOVE,
-  DONE,
-  LINE,
   CCW_ARC,
   CW_ARC,
-  SINGLE,
+  DARK,
+  DONE,
+  type GerberNode,
+  GRAPHIC,
+  type GraphicType,
   INTERPOLATE_MODE,
+  LINE,
+  LOAD_POLARITY,
+  MOVE,
   QUADRANT_MODE,
   REGION_MODE,
-  STEP_REPEAT_OPEN,
+  SEGMENT,
+  SHAPE,
+  SINGLE,
   STEP_REPEAT_CLOSE,
+  STEP_REPEAT_OPEN,
 } from "@hpcreery/tracespace-parser"
-
-import type { Tool } from "../tool-store"
-import type { Location, Point } from "../location-store"
-
 import { FeatureTypeIdentifier } from "@src/types"
+import type { Location, Point } from "../location-store"
+import type { Tool } from "../tool-store"
+import type * as Tree from "../tree"
 
 export const CW = "cw"
 export const CCW = "ccw"
@@ -33,8 +32,8 @@ export const CCW = "ccw"
 export type ArcDirection = typeof CW | typeof CCW
 
 import * as Shapes from "@src/step/layer/shape/shape"
-import { ApertureTransform } from "../aperture-transform-store"
 import { vec2 } from "gl-matrix"
+import type { ApertureTransform } from "../aperture-transform-store"
 
 export interface GraphicPlotter {
   plot: (node: GerberNode, tool: Tool, location: Location, transform: ApertureTransform) => Shapes.Shape[]

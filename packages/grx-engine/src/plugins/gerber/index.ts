@@ -1,7 +1,7 @@
-import { plot } from "./plotter/src"
 import { parse } from "@hpcreery/tracespace-parser"
-import { AddLayerProps } from "@src/plugins"
+import type { AddLayerProps } from "@src/plugins"
 import * as Comlink from "comlink"
+import { plot } from "./plotter/src"
 
 export async function plugin(buffer: ArrayBuffer, props: Partial<AddLayerProps>, addLayer: (params: AddLayerProps) => void): Promise<void> {
   const decoder = new TextDecoder("utf-8")

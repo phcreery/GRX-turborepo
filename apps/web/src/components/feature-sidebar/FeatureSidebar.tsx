@@ -1,30 +1,28 @@
-import { ActionIcon, Affix, Badge, Code, Divider, ScrollArea, ThemeIcon, Transition, useMantineTheme } from "@mantine/core"
-import { Card, Text } from "@mantine/core"
-import { useEffect, useState, useContext } from "react"
+import { ActionIcon, Affix, Badge, Card, Code, Divider, ScrollArea, Text, ThemeIcon, Transition, useMantineTheme } from "@mantine/core"
+import type { LayerInfo, QuerySelection } from "@repo/grx-engine/engine"
+import { STANDARD_SYMBOLS, type StandardSymbol } from "@repo/grx-engine/step/layer/shape/symbol/symbol"
+import { type AttributeCollection, FeatureTypeIdentifier, type Units } from "@repo/grx-engine/types"
+import { getUnitsConversion } from "@repo/grx-engine/utils"
 import { PointerEvents } from "@repo/grx-renderer"
+import { EditorConfigProvider, menuItems } from "@src/contexts/EditorContext"
 import {
+  IconArrowUpBar,
   IconCircle,
   IconLine,
-  IconVectorSpline,
-  IconPolygon,
-  IconShape2,
-  IconQuestionMark,
-  IconX,
-  IconPictureInPicture,
-  IconReplace,
-  IconArrowUpBar,
   IconNorthStar,
+  IconPictureInPicture,
+  IconPolygon,
+  IconQuestionMark,
+  IconReplace,
+  IconShape2,
+  IconVectorSpline,
+  IconX,
 } from "@tabler/icons-react"
-import { LayerInfo, QuerySelection } from "@repo/grx-engine/engine"
-import classes from "./FeatureSidebar.module.css"
-import { EditorConfigProvider } from "@src/contexts/EditorContext"
-import { getUnitsConversion } from "@repo/grx-engine/utils"
 import chroma from "chroma-js"
-import { STANDARD_SYMBOLS, StandardSymbol } from "@repo/grx-engine/step/layer/shape/symbol/symbol"
-import { AttributeCollection, FeatureTypeIdentifier, Units } from "@repo/grx-engine/types"
-import { menuItems } from "@src/contexts/EditorContext"
+import { useContext, useEffect, useState } from "react"
+import classes from "./FeatureSidebar.module.css"
 
-interface ToolbarProps {}
+type ToolbarProps = {}
 
 function CornerIcon({ children }: { children: JSX.Element }): JSX.Element {
   const [hover, setHover] = useState<boolean>(false)
@@ -227,7 +225,7 @@ export function FeatureSidebar(_props: ToolbarProps): JSX.Element {
                   Macro Pad
                 </>
               ) : (
-                <>Pad</>
+                "Pad"
               )}
             </Text>
             <Badge style={{ marginBottom: "4px" }} autoContrast fullWidth radius="sm" color={layerColor}>

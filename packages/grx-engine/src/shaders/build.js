@@ -1,7 +1,7 @@
 // this script is responsible for building the shaders found in ./src and outputting them to ./build
 
-import { promises as fs } from "fs"
-import { join } from "path"
+import { promises as fs } from "node:fs"
+import { join } from "node:path"
 import glsl from "glslify"
 
 const __dirname = new URL(".", import.meta.url).pathname
@@ -14,7 +14,7 @@ export async function main() {
   // if srcPath doesn't exist, exit
   try {
     await fs.stat(srcPath)
-  } catch (e) {
+  } catch (_e) {
     console.error(`Source path ${srcPath} does not exist`)
     process.exit(1)
   }
@@ -24,7 +24,7 @@ export async function main() {
   // check if buildpath exists, if not, create it
   try {
     await fs.stat(buildPath)
-  } catch (e) {
+  } catch (_e) {
     await fs.mkdir(buildPath)
   }
 

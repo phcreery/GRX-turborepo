@@ -1,15 +1,14 @@
-import * as Comlink from "comlink"
+import type { QuerySelection, RenderEngineBackend, Stats } from "@repo/grx-engine/engine"
 
 import EngineWorker from "@repo/grx-engine/engine?worker"
-import { gridSettings, settings } from "@repo/grx-engine/settings"
-import { UID } from "@repo/grx-engine/utils"
-import { PointerMode } from "@repo/grx-engine/types"
-import type { QuerySelection, RenderEngineBackend, Stats } from "@repo/grx-engine/engine"
 import type { AddLayerProps } from "@repo/grx-engine/plugins"
 import type { GridSettings, RenderSettings } from "@repo/grx-engine/settings"
-
+import { gridSettings, settings } from "@repo/grx-engine/settings"
 import cozetteFont from "@repo/grx-engine/step/layer/shape/text/cozette/CozetteVector.ttf?url"
 import { fontInfo as cozetteFontInfo } from "@repo/grx-engine/step/layer/shape/text/cozette/font"
+import { PointerMode } from "@repo/grx-engine/types"
+import { UID } from "@repo/grx-engine/utils"
+import * as Comlink from "comlink"
 
 console.log(`EngineWorker old: ${EngineWorker}`)
 const Worker = new EngineWorker()
@@ -220,8 +219,8 @@ export class RenderEngine {
     canvas.width = this.CONTAINER.clientWidth
     canvas.height = this.CONTAINER.clientHeight
 
-    canvas.style.width = String(this.CONTAINER.clientWidth) + "px"
-    canvas.style.height = String(this.CONTAINER.clientHeight) + "px"
+    canvas.style.width = `${String(this.CONTAINER.clientWidth)}px`
+    canvas.style.height = `${String(this.CONTAINER.clientHeight)}px`
     canvas.style.position = "absolute"
     // canvas.style.border = "1px solid white"
     canvas.style.top = "0px"
@@ -235,8 +234,8 @@ export class RenderEngine {
   private resize(): void {
     const { width, height } = this.CONTAINER.getBoundingClientRect()
 
-    this.canvasGL.style.width = String(width) + "px"
-    this.canvasGL.style.height = String(height) + "px"
+    this.canvasGL.style.width = `${String(width)}px`
+    this.canvasGL.style.height = `${String(height)}px`
     // this.canvasGL.style.zIndex = "1"
     // console.log("resize", JSON.stringify(this.canvas2D.style.width))
 

@@ -1,12 +1,12 @@
-import { useEffect, useContext } from "react"
 import { Kbd, SegmentedControl } from "@mantine/core"
-import { IconPointerPin } from "@tabler/icons-react"
-import { SnapMode, SNAP_MODES } from "@repo/grx-engine/types"
 import { useHotkeys, useLocalStorage } from "@mantine/hooks"
-import { actions } from "@src/contexts/Spotlight"
+import { SNAP_MODES, SnapMode } from "@repo/grx-engine/types"
 import { EditorConfigProvider } from "@src/contexts/EditorContext"
+import { actions } from "@src/contexts/Spotlight"
+import { IconPointerPin } from "@tabler/icons-react"
+import { useContext, useEffect } from "react"
 
-interface SnapSettingsProps {}
+type SnapSettingsProps = {}
 
 export default function SnapSettings(_props: SnapSettingsProps): JSX.Element | null {
   const { renderEngine } = useContext(EditorConfigProvider)

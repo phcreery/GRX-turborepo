@@ -1,5 +1,5 @@
-import { mat3, vec2 } from "gl-matrix"
-import { Units } from "./types"
+import { type mat3, vec2 } from "gl-matrix"
+import type { Units } from "./types"
 
 export type immutable = boolean | number | bigint | string | symbol | null | undefined
 
@@ -19,10 +19,8 @@ export function ptr<T extends immutable>(read: () => T, write: (v: T) => void): 
 export function malloc<T extends immutable>(value: T): ptr<T> {
   let i: T = value
   return ptr(
-    function () {
-      return i
-    },
-    function (v) {
+    () => i,
+    (v) => {
       i = v
     },
   )

@@ -1,12 +1,10 @@
-import REGL from "regl"
 import { vec2, vec3 } from "gl-matrix"
-import { Units, BoundingBox, SnapMode } from "../../types"
-
+import type REGL from "regl"
 import type { UniverseContext } from "../../engine"
+import type { BoundingBox, Units } from "../../types"
 import { getUnitsConversion, UID } from "../../utils"
-
-import { ShapeRenderer, ShapeRendererProps, ShapeDistance } from "./shape-renderer"
-import { WorldContext } from "../step"
+import type { WorldContext } from "../step"
+import { type ShapeDistance, ShapeRenderer, type ShapeRendererProps } from "./shape-renderer"
 
 export interface LayerProps {
   name: string
@@ -30,7 +28,7 @@ interface LayerUniforms {
   u_Alpha: number
 }
 
-interface LayerAttributes {}
+type LayerAttributes = {}
 
 export default class LayerRenderer extends ShapeRenderer {
   public visible = true

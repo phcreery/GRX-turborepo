@@ -1,26 +1,23 @@
 // Plot a tool macro as shapes
 import type { MacroPrimitiveCode, MacroValue } from "@hpcreery/tracespace-parser"
 import {
-  MACRO_VARIABLE,
-  MACRO_PRIMITIVE,
-  MACRO_CIRCLE,
-  MACRO_VECTOR_LINE_DEPRECATED,
-  MACRO_VECTOR_LINE,
   MACRO_CENTER_LINE,
+  MACRO_CIRCLE,
   MACRO_LOWER_LEFT_LINE_DEPRECATED,
+  MACRO_MOIRE_DEPRECATED,
   MACRO_OUTLINE,
   MACRO_POLYGON,
-  MACRO_MOIRE_DEPRECATED,
+  MACRO_PRIMITIVE,
   MACRO_THERMAL,
+  MACRO_VARIABLE,
+  MACRO_VECTOR_LINE,
+  MACRO_VECTOR_LINE_DEPRECATED,
 } from "@hpcreery/tracespace-parser"
-
-import { rotateAndShift } from "../coordinate-math"
-
-import * as Tree from "../tree"
-import type { MacroTool } from "../tool-store"
-
-import * as Symbols from "@src/step/layer/shape/symbol/symbol"
 import * as Shapes from "@src/step/layer/shape/shape"
+import * as Symbols from "@src/step/layer/shape/symbol/symbol"
+import { rotateAndShift } from "../coordinate-math"
+import type { MacroTool } from "../tool-store"
+import type * as Tree from "../tree"
 
 type VariableValues = Record<string, number>
 

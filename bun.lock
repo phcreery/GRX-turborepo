@@ -135,7 +135,6 @@
       "version": "0.0.0",
       "dependencies": {
         "@repo/grx-engine": "workspace:*",
-        "earcut": "^3.0.2",
       },
       "devDependencies": {
         "comlink": "^4.4.2",

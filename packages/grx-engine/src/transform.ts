@@ -1,5 +1,5 @@
-import { vec2, mat3 } from "gl-matrix"
-import { Binary } from "./types"
+import { mat3, vec2 } from "gl-matrix"
+import type { Binary } from "./types"
 
 export type TransformOrder = ("scale" | "rotate" | "translate" | "mirror")[]
 

@@ -1,24 +1,24 @@
-import REGL from "regl"
-import { mat3, vec2, vec3 } from "gl-matrix"
-import { LayerRendererProps } from "./step/layer/layer"
-import { initializeFontRenderer, initializeRenderers } from "./step/layer/collections"
 import * as Comlink from "comlink"
+import type { mat3, vec2, vec3 } from "gl-matrix"
+import REGL from "regl"
+import type { AddLayerProps, PluginDefinition } from "./plugins"
 import { addPlugin } from "./plugins"
-import type { PluginDefinition, AddLayerProps } from "./plugins"
-import { type Units } from "./types"
-import { Transform } from "./transform"
-import { ShapeDistance } from "./step/layer/shape-renderer"
+import type { GridSettings, MeasurementSettings, RenderSettings } from "./settings"
+import { gridSettings, measurementSettings, settings } from "./settings"
+import { initializeFontRenderer, initializeRenderers } from "./step/layer/collections"
+import type { LayerRendererProps } from "./step/layer/layer"
+import type { ShapeDistance } from "./step/layer/shape-renderer"
 import { StepRenderer } from "./step/step"
-import type { RenderSettings, GridSettings, MeasurementSettings } from "./settings"
-import { settings, gridSettings, measurementSettings } from "./settings"
+import type { Transform } from "./transform"
+import type { Units } from "./types"
 
-export interface UniverseProps {}
+export type UniverseProps = {}
 
-interface UniverseUniforms {}
+type UniverseUniforms = {}
 
-interface UniverseAttributes {}
+type UniverseAttributes = {}
 
-export interface UniverseContext {}
+export type UniverseContext = {}
 
 // interface ScreenRenderProps {
 //   renderTexture: REGL.Framebuffer | REGL.Texture2D
@@ -239,54 +239,54 @@ export class RenderEngineBackend {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
     viewBox.y = this.boundingBox.height - viewBox.bottom + this.boundingBox.y
     viewBox.x = viewBox.x - this.boundingBox.x
-    this.views.get(view)!.updateViewBox(viewBox)
+    this.views.get(view)?.updateViewBox(viewBox)
   }
 
   public toss(view: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.toss()
+    this.views.get(view)?.toss()
   }
 
   public moveViewport(view: string, x: number, y: number): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.moveViewport(x, y)
+    this.views.get(view)?.moveViewport(x, y)
   }
 
   public grabViewport(view: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.grabViewport()
+    this.views.get(view)?.grabViewport()
   }
 
   public releaseViewport(view: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.releaseViewport()
+    this.views.get(view)?.releaseViewport()
   }
 
   public zoom(view: string, x: number, y: number, s: number): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.zoom(x, y, s)
+    this.views.get(view)?.zoom(x, y, s)
   }
 
   public isDragging(view: string): boolean {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.isDragging()
+    return this.views.get(view)?.isDragging()
   }
 
   public updateTransform(view: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
     // return this.steps.get(view)!.updateTransform()
-    const transform = this.views.get(view)!.updateTransform()
+    const transform = this.views.get(view)?.updateTransform()
     return transform
   }
 
   public zoomAtPoint(view: string, x: number, y: number, s: number): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.zoomAtPoint(x, y, s)
+    this.views.get(view)?.zoomAtPoint(x, y, s)
   }
 
   public getWorldPosition(view: string, x: number, y: number): [number, number] {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.getWorldPosition(x, y)
+    return this.views.get(view)?.getWorldPosition(x, y)
   }
 
   public async sendMessage(data: MessageData): Promise<void> {
@@ -302,7 +302,7 @@ export class RenderEngineBackend {
    */
   public async addLayer(view: string, params: AddLayerProps): Promise<void> {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.addLayer(params)
+    return this.views.get(view)?.addLayer(params)
   }
 
   /**
@@ -310,7 +310,7 @@ export class RenderEngineBackend {
    */
   public async addFile(view: string, buffer: ArrayBuffer, params: { format: string; props: Partial<Omit<AddLayerProps, "image">> }): Promise<void> {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.addFile(buffer, params)
+    return this.views.get(view)?.addFile(buffer, params)
   }
 
   /**
@@ -318,17 +318,17 @@ export class RenderEngineBackend {
    */
   public getLayers(view: string): LayerInfo[] {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.getLayers()
+    return this.views.get(view)?.getLayers()
   }
 
   public getTransform(view: string): Partial<RenderTransform> {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.getTransform()
+    return this.views.get(view)?.getTransform()
   }
 
   public setTransform(view: string, transform: Partial<RenderTransform>): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.setTransform(transform)
+    this.views.get(view)?.setTransform(transform)
   }
 
   /**
@@ -336,7 +336,7 @@ export class RenderEngineBackend {
    */
   public removeLayer(view: string, id: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.removeLayer(id)
+    this.views.get(view)?.removeLayer(id)
   }
 
   /**
@@ -344,7 +344,7 @@ export class RenderEngineBackend {
    */
   public moveLayer(view: string, from: number, to: number): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.moveLayer(from, to)
+    this.views.get(view)?.moveLayer(from, to)
   }
 
   /**
@@ -352,12 +352,12 @@ export class RenderEngineBackend {
    */
   public setLayerProps(view: string, id: string, props: Partial<Omit<LayerRendererProps, "regl">>): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.setLayerProps(id, props)
+    this.views.get(view)?.setLayerProps(id, props)
   }
 
   public setLayerTransform(view: string, id: string, transform: Partial<Transform>): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.setLayerTransform(id, transform)
+    this.views.get(view)?.setLayerTransform(id, transform)
   }
 
   public addEventCallback(event: TEngineEvents, listener: (data: MessageData | null) => void): void {
@@ -373,36 +373,36 @@ export class RenderEngineBackend {
 
   public sample(view: string, x: number, y: number): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.sample(x, y)
+    this.views.get(view)?.sample(x, y)
   }
 
   public select(view: string, pointer: vec2): QuerySelection[] {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
     let selection: QuerySelection[] = []
-    selection = this.views.get(view)!.select(pointer)
+    selection = this.views.get(view)?.select(pointer)
     return selection
   }
 
   public snap(view: string, pointer: vec2): vec2 {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
     let snapped: vec2 = pointer
-    snapped = this.views.get(view)!.snap(pointer)
+    snapped = this.views.get(view)?.snap(pointer)
     return snapped
   }
 
   public clearSelection(view: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.clearSelection()
+    this.views.get(view)?.clearSelection()
   }
 
   public setPointer(view: string, mouse: Partial<Pointer>): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.setPointer(mouse)
+    this.views.get(view)?.setPointer(mouse)
   }
 
   public async zoomFit(view: string): Promise<void> {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.zoomFit()
+    this.views.get(view)?.zoomFit()
   }
 
   // public startLoading(): void {
@@ -415,32 +415,32 @@ export class RenderEngineBackend {
 
   public addMeasurement(view: string, point: vec2): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.addMeasurement(point)
+    this.views.get(view)?.addMeasurement(point)
   }
 
   public updateMeasurement(view: string, point: vec2): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.updateMeasurement(point)
+    this.views.get(view)?.updateMeasurement(point)
   }
 
   public finishMeasurement(view: string, point: vec2): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    this.views.get(view)!.finishMeasurement(point)
+    this.views.get(view)?.finishMeasurement(point)
   }
 
   public getMeasurements(view: string): { point1: vec2; point2: vec2 }[] {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.getMeasurements()
+    return this.views.get(view)?.getMeasurements()
   }
 
   public getCurrentMeasurement(view: string): { point1: vec2; point2: vec2 } | null {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.getCurrentMeasurement()
+    return this.views.get(view)?.getCurrentMeasurement()
   }
 
   public clearMeasurements(view: string): void {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.clearMeasurements()
+    return this.views.get(view)?.clearMeasurements()
   }
 
   public getLayersQueue(view: string): {
@@ -448,7 +448,7 @@ export class RenderEngineBackend {
     id: string
   }[] {
     if (!this.views.has(view)) throw new Error(`View ${view} not found`)
-    return this.views.get(view)!.layersQueue
+    return this.views.get(view)?.layersQueue
   }
 
   public render(): void {
@@ -466,11 +466,11 @@ export class RenderEngineBackend {
   public getStats(): Stats {
     return {
       regl: {
-        totalTextureSize: this.regl.stats.getTotalTextureSize ? this.regl.stats!.getTotalTextureSize() : -1,
-        totalBufferSize: this.regl.stats.getTotalBufferSize ? this.regl.stats!.getTotalBufferSize() : -1,
-        totalRenderbufferSize: this.regl.stats.getTotalRenderbufferSize ? this.regl.stats!.getTotalRenderbufferSize() : -1,
-        maxUniformsCount: this.regl.stats.getMaxUniformsCount ? this.regl.stats!.getMaxUniformsCount() : -1,
-        maxAttributesCount: this.regl.stats.getMaxAttributesCount ? this.regl.stats!.getMaxAttributesCount() : -1,
+        totalTextureSize: this.regl.stats.getTotalTextureSize ? this.regl.stats?.getTotalTextureSize() : -1,
+        totalBufferSize: this.regl.stats.getTotalBufferSize ? this.regl.stats?.getTotalBufferSize() : -1,
+        totalRenderbufferSize: this.regl.stats.getTotalRenderbufferSize ? this.regl.stats?.getTotalRenderbufferSize() : -1,
+        maxUniformsCount: this.regl.stats.getMaxUniformsCount ? this.regl.stats?.getMaxUniformsCount() : -1,
+        maxAttributesCount: this.regl.stats.getMaxAttributesCount ? this.regl.stats?.getMaxAttributesCount() : -1,
         bufferCount: this.regl.stats.bufferCount,
         elementsCount: this.regl.stats.elementsCount,
         framebufferCount: this.regl.stats.framebufferCount,

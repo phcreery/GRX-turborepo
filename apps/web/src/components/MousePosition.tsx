@@ -1,11 +1,10 @@
-import React from "react"
-import { PointerEvent } from "@repo/grx-renderer"
-import { PointerEvents } from "@repo/grx-renderer"
 import { Card, Group, Text, Tooltip } from "@mantine/core"
-import { EditorConfigProvider } from "@src/contexts/EditorContext"
 import { getUnitsConversion } from "@repo/grx-engine/utils"
+import { type PointerEvent, PointerEvents } from "@repo/grx-renderer"
+import { EditorConfigProvider } from "@src/contexts/EditorContext"
+import React from "react"
 
-interface MousePositionProps {}
+type MousePositionProps = {}
 
 export default function MousePosition(_props: MousePositionProps): JSX.Element | null {
   const { units, renderEngine } = React.useContext(EditorConfigProvider)

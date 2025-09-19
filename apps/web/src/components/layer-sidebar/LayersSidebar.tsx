@@ -1,27 +1,23 @@
-import { useEffect, useState, useContext } from "react"
-import { Card, Group, Text, Button, FileButton, Stack, ScrollArea, Modal, Select, useMantineTheme } from "@mantine/core"
-import { Dropzone, FileWithPath as FileWithFormat, FileWithPath } from "@mantine/dropzone"
-import { IconFileX, IconFileVector, IconContrast, IconContrastOff, IconClearAll } from "@tabler/icons-react"
-import LayerListItem from "./LayerListItem"
-import type { LayerInfo } from "@repo/grx-engine/engine"
-import * as Comlink from "comlink"
-
-import { getPlugins } from "@repo/grx-engine/plugins"
-import { EngineEvents } from "@repo/grx-engine/engine"
-import { useContextMenu } from "mantine-contextmenu"
-import { EditorConfigProvider } from "@src/contexts/EditorContext"
-
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core"
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { closestCenter, DndContext, type DragEndEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers"
-
-import { Resizable } from "re-resizable"
-
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { Button, Card, FileButton, Group, Modal, ScrollArea, Select, Stack, Text, useMantineTheme } from "@mantine/core"
+import { Dropzone, type FileWithPath as FileWithFormat, type FileWithPath } from "@mantine/dropzone"
 import { useLocalStorage } from "@mantine/hooks"
+import type { LayerInfo } from "@repo/grx-engine/engine"
+import { EngineEvents } from "@repo/grx-engine/engine"
+import { getPlugins } from "@repo/grx-engine/plugins"
+import { EditorConfigProvider } from "@src/contexts/EditorContext"
+import { IconClearAll, IconContrast, IconContrastOff, IconFileVector, IconFileX } from "@tabler/icons-react"
+import * as Comlink from "comlink"
+import { useContextMenu } from "mantine-contextmenu"
+import { Resizable } from "re-resizable"
+import { useContext, useEffect, useState } from "react"
+import LayerListItem from "./LayerListItem"
 
 const UID = (): string => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-interface SidebarProps {}
+type SidebarProps = {}
 
 export interface UploadFile extends FileWithFormat {
   format: string
@@ -45,12 +41,12 @@ export default function LayerSidebar(_props: SidebarProps): JSX.Element | null {
     const newLayers: UploadFile[] = []
     rendererLayers.forEach(async (layer) => {
       const file = new File([], layer.name)
-      const newfile: UploadFile = Object.assign(file, { id: layer.id, format: 'raw' })
+      const newfile: UploadFile = Object.assign(file, { id: layer.id, format: "raw" })
       newLayers.push(newfile)
     })
     loadingLayers.forEach(async (layer) => {
       const file = new File([], layer.name)
-      const newfile: UploadFile = Object.assign(file, { id: layer.id, format: 'raw' })
+      const newfile: UploadFile = Object.assign(file, { id: layer.id, format: "raw" })
       newLayers.push(newfile)
     })
     setLayers(newLayers)
@@ -90,7 +86,7 @@ export default function LayerSidebar(_props: SidebarProps): JSX.Element | null {
   useEffect(() => {
     renderEngine.backend.then(async (backend) => {
       const reg = async (): Promise<void> => {
-        renderEngine.backend.then(backend => backend.zoomFit("main"))
+        renderEngine.backend.then((backend) => backend.zoomFit("main"))
         return registerLayers(await backend.getLayers("main"), await backend.getLayersQueue("main"))
       }
       reg()

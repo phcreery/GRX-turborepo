@@ -1,7 +1,7 @@
 // Tool store
 // Keeps track of the defined tools, defined macros, and the current tool
-import type { GerberNode, SimpleShape, HoleShape, MacroBlock } from "@hpcreery/tracespace-parser"
-import { MACRO_SHAPE, TOOL_CHANGE, TOOL_DEFINITION, TOOL_MACRO, BLOCK_APERTURE_OPEN, BLOCK_APERTURE_CLOSE } from "@hpcreery/tracespace-parser"
+import type { GerberNode, HoleShape, MacroBlock, SimpleShape } from "@hpcreery/tracespace-parser"
+import { BLOCK_APERTURE_CLOSE, BLOCK_APERTURE_OPEN, MACRO_SHAPE, TOOL_CHANGE, TOOL_DEFINITION, TOOL_MACRO } from "@hpcreery/tracespace-parser"
 
 import * as Symbols from "@src/step/layer/shape/symbol/symbol"
 
@@ -13,7 +13,7 @@ export const MACRO_TOOL = "macroTool"
 
 import * as Constants from "@hpcreery/tracespace-parser"
 import { plotShapes } from "."
-import { PlotOptions } from "./options"
+import type { PlotOptions } from "./options"
 
 export interface SimpleTool {
   type: typeof SIMPLE_TOOL

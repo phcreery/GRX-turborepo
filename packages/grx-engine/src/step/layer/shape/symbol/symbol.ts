@@ -1,7 +1,7 @@
-import { ISymbolRecord, FeatureTypeIdentifier, toMap, BoundingBox, AttributeCollection } from "../../../../types"
-import { Shape, getBoundingBoxOfShape } from "../shape"
-import { malloc } from "../../../../utils"
 import { vec2 } from "gl-matrix"
+import { type AttributeCollection, type BoundingBox, FeatureTypeIdentifier, type ISymbolRecord, toMap } from "../../../../types"
+import { malloc } from "../../../../utils"
+import { getBoundingBoxOfShape, type Shape } from "../shape"
 
 export const STANDARD_SYMBOLS = [
   "Null",

@@ -49,7 +49,7 @@ export default function struct(format) {
     if (arrb.byteLength < (offs | 0) + size) {
       throw errbuf
     }
-    let v = new DataView(arrb, offs | 0)
+    const v = new DataView(arrb, offs | 0)
     return fns.map((f) => f.u(v))
   }
   const pack_into = (arrb, offs, ...values) => {
@@ -64,7 +64,7 @@ export default function struct(format) {
     fns.forEach((f, i) => f.p(v, values[i]))
   }
   const pack = (...values) => {
-    let b = new ArrayBuffer(size)
+    const b = new ArrayBuffer(size)
     pack_into(b, 0, ...values)
     return b
   }

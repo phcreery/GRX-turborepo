@@ -1,6 +1,6 @@
 // call ./build.js file method main when any file in ./src and ./modules changes
 
-import { join } from "path"
+import { join } from "node:path"
 import chokidar from "chokidar"
 import { main } from "./build.js"
 

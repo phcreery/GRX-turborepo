@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "build:shaders": "node src/shaders/build.js",
+    "build:shaders:watch": "node src/shaders/watch.js",
+    "build:chevrotain:types": "tsx lib/nc/chevrotain-parser/gen_dts_signature.js"
   },
   "exports": {
     "./*": {

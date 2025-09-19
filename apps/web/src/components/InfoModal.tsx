@@ -1,7 +1,7 @@
-import { Modal, ActionIcon, Accordion, Text, Anchor, Table, Paper, TableData, Kbd, Space, Title } from "@mantine/core"
+import { Accordion, ActionIcon, Anchor, Kbd, Modal, Paper, Space, Table, type TableData, Text, Title } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
-import { IconUserQuestion } from "@tabler/icons-react"
 import { actions } from "@src/contexts/Spotlight"
+import { IconUserQuestion } from "@tabler/icons-react"
 import EngineStats from "./toolbar/EngineStats"
 
 export default function InfoModal(): JSX.Element | null {

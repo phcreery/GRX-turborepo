@@ -1,7 +1,7 @@
-import { defineConfig } from "vite"
-import path, { resolve } from "path"
+import path from "node:path"
 import { glob } from "glob"
 import dts from "unplugin-dts/vite"
+import { defineConfig } from "vite"
 import pkg from "./package.json"
 
 const inputFiles = glob.sync(path.resolve(__dirname, "src/**/*.ts").replace(/\\/g, "/"))

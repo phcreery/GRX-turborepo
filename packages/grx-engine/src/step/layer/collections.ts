@@ -1,39 +1,32 @@
-import REGL from "regl"
-import * as Shapes from "./shape/shape"
-import * as Symbols from "./shape/symbol/symbol"
+import earcut from "earcut"
+import { type vec2, vec4 } from "gl-matrix"
+import type REGL from "regl"
 import { glFloatSize } from "../../constants"
-import { FeatureTypeIdentifier, Binary } from "../../types"
-import { MacroRenderer, StepAndRepeatRenderer } from "./shape-renderer"
-
-import PadFrag from "./../../shaders/src/Pad.frag"
-import PadVert from "./../../shaders/src/Pad.vert"
-import LineFrag from "./../../shaders/src/Line.frag"
-import LineVert from "./../../shaders/src/Line.vert"
+import type { UniverseContext } from "../../engine"
+import { type GridSettings, type OriginRenderProps, settings } from "../../settings"
 import ArcFrag from "./../../shaders/src/Arc.frag"
 import ArcVert from "./../../shaders/src/Arc.vert"
-import SurfaceFrag from "./../../shaders/src/Surface.frag"
-import SurfaceVert from "./../../shaders/src/Surface.vert"
-import GlyphtextFrag from "./../../shaders/src/GlyphText.frag"
-import GlyphtextVert from "./../../shaders/src/GlyphText.vert"
 import DatumFrag from "./../../shaders/src/Datum.frag"
 import DatumVert from "./../../shaders/src/Datum.vert"
-
-import GridFrag from "./../../shaders/src/Grid.frag"
-import OriginFrag from "./../../shaders/src/Origin.frag"
 // import LoadingFrag from "./../../shaders/src/Loading/Winding.frag"
 import FullScreenQuad from "./../../shaders/src/FullScreenQuad.vert"
-
-import { GridSettings, OriginRenderProps } from "../../settings"
-
-import { UniverseContext } from "../../engine"
-import { vec2, vec4 } from "gl-matrix"
-
-import { settings } from "../../settings"
-
-import earcut from "earcut"
+import GlyphtextFrag from "./../../shaders/src/GlyphText.frag"
+import GlyphtextVert from "./../../shaders/src/GlyphText.vert"
+import GridFrag from "./../../shaders/src/Grid.frag"
+import LineFrag from "./../../shaders/src/Line.frag"
+import LineVert from "./../../shaders/src/Line.vert"
+import OriginFrag from "./../../shaders/src/Origin.frag"
+import PadFrag from "./../../shaders/src/Pad.frag"
+import PadVert from "./../../shaders/src/Pad.vert"
+import SurfaceFrag from "./../../shaders/src/Surface.frag"
+import SurfaceVert from "./../../shaders/src/Surface.vert"
+import { type Binary, FeatureTypeIdentifier } from "../../types"
+import type { WorldContext } from "../step"
+import * as Shapes from "./shape/shape"
+import * as Symbols from "./shape/symbol/symbol"
 
 import { fontInfo as cozetteFontInfo } from "./shape/text/cozette/font"
-import { WorldContext } from "../step"
+import { MacroRenderer, StepAndRepeatRenderer } from "./shape-renderer"
 
 const {
   LINE_RECORD_PARAMETERS,
@@ -48,11 +41,11 @@ type CustomAttributeConfig = Omit<REGL.AttributeConfig, "buffer"> & {
   buffer: REGL.DynamicVariable<REGL.Buffer>
 }
 
-interface PadUniforms {}
+type PadUniforms = {}
 
-interface LineUniforms {}
+type LineUniforms = {}
 
-interface ArcUniforms {}
+type ArcUniforms = {}
 
 interface DatumTextUniforms {
   u_Texture: REGL.Texture2D
@@ -61,7 +54,7 @@ interface DatumTextUniforms {
   u_CharSpacing: vec2
 }
 
-interface DatumUniforms {}
+type DatumUniforms = {}
 
 interface PadAttributes {
   a_SymNum: CustomAttributeConfig
@@ -174,7 +167,7 @@ interface FrameBufferRenderUniforms {
   u_Polarity: number
   u_RenderTexture: REGL.Framebuffer2D
 }
-interface FrameBufferRendeAttributes {}
+type FrameBufferRendeAttributes = {}
 
 export interface FrameBufferRenderAttachments {
   qtyFeatures: number
@@ -969,7 +962,7 @@ export class ShapesShaderCollection {
       if (descriptor === undefined) {
         return false
       }
-      return !!Object.getOwnPropertyDescriptor(obj, prop)!["get"]
+      return !!Object.getOwnPropertyDescriptor(obj, prop)?.get
     }
 
     function fixSymbolGetter(record: Shapes.Pad | Shapes.Line | Shapes.Arc | Shapes.DatumArc | Shapes.DatumLine | Shapes.DatumPoint): void {
@@ -1014,67 +1007,66 @@ export class ShapesShaderCollection {
       })
       this.surfaceEdges.symbolsCollection = this.symbolsCollection
 
+      const surfaceOutlineSymbol = new Symbols.NullSymbol({
+        id: "surface-outline-symbol",
+      })
 
-    const surfaceOutlineSymbol = new Symbols.NullSymbol({
-      id: "surface-outline-symbol",
-    })
+      // const surfaceDatums: Shapes.DatumPoint[] = []
 
-    // const surfaceDatums: Shapes.DatumPoint[] = []
-
-    this.symbolsCollection.add(surfaceOutlineSymbol)
-    // this.shapes.surfaceEdges.symbolsCollection.add(surfaceOutlineSymbol)
-    const surfaceOutlineShapes: Shapes.Shape[] = []
-    this.shapes.surfaces.forEach((surface) => {
-      surface.index
-      surface.contours.forEach((contour) => {
-        let xs = contour.xs
-        let ys = contour.ys
-        contour.segments.forEach((segment) => {
-          if (segment.type === FeatureTypeIdentifier.LINESEGMENT) {
-            surfaceOutlineShapes.push(
-              new Shapes.Line({
-                xs: xs,
-                ys: ys,
-                xe: segment.x,
-                ye: segment.y,
-                // index: -1,
-                index: surface.index,
-                symbol: surfaceOutlineSymbol,
-              }),
-            )
-          } else {
-            surfaceOutlineShapes.push(
-              new Shapes.Arc({
-                xs: xs,
-                ys: ys,
-                xc: segment.xc,
-                yc: segment.yc,
-                xe: segment.x,
-                ye: segment.y,
-                clockwise: segment.clockwise,
-                // index: -1,
-                index: surface.index,
-                symbol: surfaceOutlineSymbol,
-              }),
-            )
-          }
-          // surfaceDatums.push(new Shapes.DatumPoint({
-          //   x: segment.x,
-          //   y: segment.y,
-          // }))
-          // this.shapes.pads.push(new Shapes.Pad({
-          //   x: segment.x,
-          //   y: segment.y,
-          //   symbol: surfaceOutlineSymbol,
-          // }))
-          xs = segment.x
-          ys = segment.y
+      this.symbolsCollection.add(surfaceOutlineSymbol)
+      // this.shapes.surfaceEdges.symbolsCollection.add(surfaceOutlineSymbol)
+      const surfaceOutlineShapes: Shapes.Shape[] = []
+      this.shapes.surfaces.forEach((surface) => {
+        surface.index
+        surface.contours.forEach((contour) => {
+          let xs = contour.xs
+          let ys = contour.ys
+          contour.segments.forEach((segment) => {
+            if (segment.type === FeatureTypeIdentifier.LINESEGMENT) {
+              surfaceOutlineShapes.push(
+                new Shapes.Line({
+                  xs: xs,
+                  ys: ys,
+                  xe: segment.x,
+                  ye: segment.y,
+                  // index: -1,
+                  index: surface.index,
+                  symbol: surfaceOutlineSymbol,
+                }),
+              )
+            } else {
+              surfaceOutlineShapes.push(
+                new Shapes.Arc({
+                  xs: xs,
+                  ys: ys,
+                  xc: segment.xc,
+                  yc: segment.yc,
+                  xe: segment.x,
+                  ye: segment.y,
+                  clockwise: segment.clockwise,
+                  // index: -1,
+                  index: surface.index,
+                  symbol: surfaceOutlineSymbol,
+                }),
+              )
+            }
+            // surfaceDatums.push(new Shapes.DatumPoint({
+            //   x: segment.x,
+            //   y: segment.y,
+            // }))
+            // this.shapes.pads.push(new Shapes.Pad({
+            //   x: segment.x,
+            //   y: segment.y,
+            //   symbol: surfaceOutlineSymbol,
+            // }))
+            xs = segment.x
+            ys = segment.y
+          })
         })
       })
-    })
-    this.surfaceEdges.refresh(surfaceOutlineShapes)
-    // this.surfacesDatum.refresh(surfaceDatums)
-  }
+      this.surfaceEdges.refresh(surfaceOutlineShapes)
+      // this.surfacesDatum.refresh(surfaceDatums)
+    }
 
     this.shapes.pads.forEach((record) => {
       if (record.symbol.type != FeatureTypeIdentifier.SYMBOL_DEFINITION) {
@@ -1383,7 +1375,7 @@ export class SymbolShaderCollection {
     if (this.symbols.has(symbol.id)) {
       if (this.getSymbolParameters(symbol).toString() == this.getSymbolParameters(this.symbols.get(symbol.id)!).toString()) {
         // console.log(`Identical Symbol with id ${symbol.id} already exists`)
-        symbol.sym_num = this.symbols.get(symbol.id)!.sym_num
+        symbol.sym_num = this.symbols.get(symbol.id)?.sym_num
         return symbol.id
       }
       // console.log(`Unsimilar Symbol with id ${symbol.id} already exists`)
@@ -1502,7 +1494,7 @@ export class MacroShaderCollection {
             macro: record.symbol,
           })
         }
-        this.macros.get(record.symbol.id)!.records.push(record as Shapes.Pad)
+        this.macros.get(record.symbol.id)?.records.push(record as Shapes.Pad)
       }
     })
     this.macros.forEach((macro) => {
@@ -1701,7 +1693,7 @@ export function fixedTextureData(
   height: number
   data: number[]
 } {
-  if (inputData.length > Math.pow(maxTextureSize, 2)) {
+  if (inputData.length > maxTextureSize ** 2) {
     throw new Error("Cannot fit data into size")
   }
   const width = inputData.length < maxTextureSize ? inputData.length % maxTextureSize : maxTextureSize

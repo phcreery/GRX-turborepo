@@ -1,12 +1,10 @@
 // https://images.autodesk.com/adsk/files/autocad_2012_pdf_dxf-reference_enu.pdf
 
-import { vec2, vec3 } from "gl-matrix"
-import { Vector4 } from "./vec/index.js"
-
-import * as DxfParser from "dxf-parser"
 import * as Shapes from "@src/step/layer/shape/shape"
-
+import type * as DxfParser from "dxf-parser"
+import { vec2, vec3 } from "gl-matrix"
 import { NURBSCurve } from "./curves/NURBSCurve"
+import { Vector4 } from "./vec/index.js"
 
 type Layers = {
   [layerName: string]: {
@@ -374,7 +372,7 @@ export function getUnits(dxf: DxfParser.IDxf): "inch" | "mm" {
   let units: "inch" | "mm" = "inch"
   // check if $INSUNITS exists
   if (dxf.header && Object.keys(dxf.header).includes("$INSUNITS")) {
-    units = dxf.header["$INSUNITS"] === 1 ? "inch" : dxf.header["$INSUNITS"] === 4 ? "mm" : "inch"
+    units = dxf.header.$INSUNITS === 1 ? "inch" : dxf.header.$INSUNITS === 4 ? "mm" : "inch"
   } else {
     console.warn("No $INSUNITS found, defaulting to inches")
   }

@@ -1,25 +1,23 @@
-import { Lexer, createToken, CstParser, CstNode, ParserMethod, IToken, Rule } from "chevrotain"
-import { generateCstDts } from "chevrotain"
-import * as Cst from "./nccst"
 import * as Shapes from "@src/step/layer/shape/shape"
 import * as Symbols from "@src/step/layer/shape/symbol/symbol"
-
-import { Units, AttributeCollection, Binary, FeatureTypeIdentifier } from "@src/types"
-import {
-  Format,
-  ZeroSuppression,
-  Position,
-  ArcPosition,
-  Point,
-  InterpolateModeType,
-  Mode,
+import { type AttributeCollection, type Binary, FeatureTypeIdentifier, type Units } from "@src/types"
+import { getUnitsConversion } from "@src/utils"
+import { type CstNode, CstParser, createToken, generateCstDts, type IToken, Lexer, type ParserMethod, type Rule } from "chevrotain"
+import * as Constants from "./constants"
+import type * as Cst from "./nccst"
+import type {
   ArcDirection,
+  ArcPosition,
   CoordinateMode,
   CutterCompensation,
+  Format,
+  InterpolateModeType,
+  Mode,
+  Point,
+  Position,
   PossiblePoints,
+  ZeroSuppression,
 } from "./types"
-import * as Constants from "./constants"
-import { getUnitsConversion } from "@src/utils"
 
 const DefaultTokens = {
   WhiteSpace: createToken({ name: "WhiteSpace", pattern: /\s+/, group: Lexer.SKIPPED }),

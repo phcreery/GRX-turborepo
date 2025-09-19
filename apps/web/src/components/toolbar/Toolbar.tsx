@@ -1,39 +1,38 @@
-import React from "react"
+// import chroma from 'chroma-js'
+import { ActionIcon, Card, Group, Kbd, Modal, Popover, Tooltip, useMantineTheme } from "@mantine/core"
+import { useDisclosure, useHotkeys } from "@mantine/hooks"
+import { PointerMode } from "@repo/grx-engine/types"
+import { EditorConfigProvider, menuItems } from "@src/contexts/EditorContext"
+import { actions } from "@src/contexts/Spotlight"
+import type { PointerSettings } from "@src/renderer"
 import {
-  IconArrowsMove,
-  IconRulerMeasure,
   // IconZoomIn,
   // IconZoomOut,
   // IconHome,
   IconAdjustments,
-  IconCube3dSphere,
-  // IconCube3dSphereOff,
-  IconCube,
-  // IconGridDots,
-  IconGrid4x4,
-  IconClick,
-  IconZoomReset,
-  IconTrashX,
-  IconEngine,
-  IconPointerPin,
+  IconArrowsMove,
   IconBone,
   IconBoneOff,
+  IconClick,
+  // IconCube3dSphereOff,
+  IconCube,
+  IconCube3dSphere,
+  IconEngine,
+  // IconGridDots,
+  IconGrid4x4,
+  IconPointerPin,
+  IconRulerMeasure,
+  IconTrashX,
+  IconZoomReset,
 } from "@tabler/icons-react"
-// import chroma from 'chroma-js'
-import { Modal, ActionIcon, Card, Group, Tooltip, useMantineTheme, Kbd, Popover } from "@mantine/core"
-import { useDisclosure, useHotkeys } from "@mantine/hooks"
+import { useContextMenu } from "mantine-contextmenu"
+import React from "react"
+import EngineSettings from "./EngineSettings"
 import GeneralSettings from "./GeneralSettings"
 import GridSettings from "./GridSettings"
-import EngineSettings from "./EngineSettings"
-import type { PointerSettings } from "@src/renderer"
-import { useContextMenu } from "mantine-contextmenu"
-import { EditorConfigProvider } from "@src/contexts/EditorContext"
-import { actions } from "@src/contexts/Spotlight"
-import { menuItems } from "@src/contexts/EditorContext"
-import { PointerMode } from "@repo/grx-engine/types"
 import SnapSettings from "./SnapSettings"
 
-interface ToolbarProps {}
+type ToolbarProps = {}
 
 export default function Toolbar(_props: ToolbarProps): JSX.Element | null {
   const { units, renderEngine } = React.useContext(EditorConfigProvider)

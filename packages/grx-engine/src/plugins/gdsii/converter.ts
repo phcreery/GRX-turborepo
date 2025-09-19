@@ -1,7 +1,7 @@
-import * as TREE from "@repo/gdsii/gdsii_tree"
-import { Plotter } from "./plotter"
-import { LayerHierarchy } from "./types"
+import type * as TREE from "@repo/gdsii/gdsii_tree"
 import messages from "./messages"
+import { Plotter } from "./plotter"
+import type { LayerHierarchy } from "./types"
 
 // CONVERTER
 // CELL structure and DATATYPE information is lost in the conversion.
@@ -34,9 +34,7 @@ export function convert(gdsii: TREE.GDSIIBNF): LayerHierarchy {
     }
   }
 
-  const topLevelCells = Array.from(plotter.availableCells).filter(function (obj) {
-    return Array.from(plotter.referencedCells).indexOf(obj) == -1
-  })
+  const topLevelCells = Array.from(plotter.availableCells).filter((obj) => Array.from(plotter.referencedCells).indexOf(obj) == -1)
 
   // convert GDSIIHierarchy to LayerHierarchy
   const layerHierarchy: LayerHierarchy = {}

@@ -6,11 +6,10 @@
 // import gdsiiFile from './testdata/GdsIITests_test.gds?url' // broken boundaries, paths with different ends
 // import gdsiiFile from './testdata/GdsIITests_circles.gds?url'
 
-import * as Comlink from "comlink"
-import type { IPlugin } from "../../plugins"
-
 import { recordReader } from "@repo/gdsii/lexer"
 import { parse } from "@repo/gdsii/parser"
+import * as Comlink from "comlink"
+import type { IPlugin } from "../../plugins"
 
 import { convert } from "./converter"
 import messages from "./messages"

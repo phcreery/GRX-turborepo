@@ -1,7 +1,4 @@
-
-
 export type RecordToken = {
-  recordType: number;
-  data: ArrayBuffer | number[] | string;
-};
-
+  recordType: number
+  data: ArrayBuffer | number[] | string
+}
