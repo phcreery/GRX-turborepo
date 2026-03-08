@@ -1,12 +1,26 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "**",
+      "!!**/out",
+      "!!**/dist",
+      "!!**/dist-desktop",
+      "!!**/.vite",
+      "!!**/.turbo",
+      "!!**/pnpm-lock.yaml",
+      "!!**/LICENSE.md",
+      "!!**/tsconfig.json",
+      "!!**/tsconfig.*.json",
+      "!!**/*.frag",
+      "!!**/*.vert"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -14,18 +28,7 @@
     "indentWidth": 2,
     "lineEnding": "lf",
     "lineWidth": 150,
-    "bracketSpacing": true,
-    "includes": [
-      "**",
-      "!**/out",
-      "!**/dist",
-      "!**/pnpm-lock.yaml",
-      "!**/LICENSE.md",
-      "!**/tsconfig.json",
-      "!**/tsconfig.*.json",
-      "!**/*.frag",
-      "!**/*.vert"
-    ]
+    "bracketSpacing": true
   },
   "linter": {
     "enabled": true,
@@ -40,13 +43,16 @@
       "complexity": {
         "noImportantStyles": "off",
         "noBannedTypes": "off",
-        "useOptionalChain": "off"
+        "useOptionalChain": "off",
+        "noStaticOnlyClass": "off",
+        "noUselessTypeConstraint": "error",
+        "useLiteralKeys": "off"
       },
       "suspicious": {
         "noDoubleEquals": "off",
         "noArrayIndexKey": "off",
         "noControlCharactersInRegex": "off",
-        "noExplicitAny": "off",
+        "noExplicitAny": "error",
         "useIterableCallbackReturn": "off",
         "noAssignInExpressions": "off",
         "noImplicitAnyLet": "off",

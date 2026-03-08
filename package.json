@@ -1,20 +1,44 @@
 {
-  "name": "GRX-turborepo",
+  "name": "grx-turborepo",
+  "version": "0.0.1-rc.14",
   "private": true,
   "scripts": {
+    "prepare": "husky",
+    "dev": "turbo watch dev",
+    "dev:desktop": "turbo watch dev:desktop",
     "build": "turbo run build",
-    "dev": "turbo run dev"
+    "build:desktop": "turbo run build:desktop",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write",
+    "typecheck": "turbo run typecheck",
+    "changelog": "git-cliff --config cliff.toml --latest"
   },
   "devDependencies": {
-    "prettier": "^3.6.2",
-    "turbo": "^2.5.6",
-    "typescript": "5.9.2",
-    "@biomejs/biome": "^2.2.4"
+    "@biomejs/biome": "^2.4.5",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.1",
+    "commitlint": "^20.4.2",
+    "git-cliff": "^2.12.0",
+    "husky": "^9.1.7",
+    "turbo": "2.8.14-canary.6",
+    "typescript": "5.9.3"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.17",
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.26.0"
+    },
+    "onlyBuiltDependencies": [
+      "electron",
+      "electron-winstaller",
+      "esbuild",
+      "phantomjs-prebuilt"
+    ]
+  },
   "workspaces": [
     "apps/*",
     "packages/*"

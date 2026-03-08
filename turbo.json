@@ -1,7 +1,12 @@
 {
-  "$schema": "https://turborepo.com/schema.json",
+  "$schema": "https://v2-8-3.turborepo.dev/schema.json",
   "tasks": {
     "dev": {
+      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
+    },
+    "dev:desktop": {
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
@@ -10,11 +15,17 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "build:desktop": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist-desktop/**"]
+    },
     "start": {},
     "lint": {},
     "format": {},
+    "check": {},
     "typecheck": {
       "outputs": []
     }
-  }
+  },
+  "ui": "tui"
 }

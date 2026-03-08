@@ -21,11 +21,15 @@ coverage
 # Vercel
 .vercel
 
+# Vite
+.vite
+
 # Build Outputs
 .next/
 out/
 build
 dist
+dist-desktop
 
 
 # Debug

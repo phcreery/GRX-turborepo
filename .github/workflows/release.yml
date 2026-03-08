@@ -1,0 +1,86 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate a changelog
+        id: git-cliff
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+
+  executables:
+    needs: changelog
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      # - name: Approve Builds (electron-builder)
+      #   run: pnpm approve-builds
+      - name: Build Desktop
+        run: pnpm run build:desktop
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          # body_path: CHANGELOG.md
+          body: "${{ needs.changelog.outputs.release_body }}"
+          files: |
+            apps/viewer/dist-desktop/*.dmg
+            apps/viewer/dist-desktop/*.exe
+            apps/viewer/dist-desktop/*.AppImage
+            apps/viewer/dist-desktop/*.snap
+            apps/viewer/dist-desktop/*.deb
+            apps/viewer/dist-desktop/*.zip
+  web-page:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./apps/viewer/dist/"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
